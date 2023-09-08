@@ -12,7 +12,7 @@ import jsdom, { JSDOM } from 'jsdom';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   try {
-    const { messages, key, model, googleAPIKey, googleCSEId } =
+    const { messages, key, googleAPIKey, googleCSEId } =
       req.body as GoogleBody;
 
     const userMessage = messages[messages.length - 1];
@@ -122,7 +122,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
       },
       method: 'POST',
       body: JSON.stringify({
-        model: model.id,
+        model: "gpt3.5-turbo",
         messages: [
           {
             role: 'system',
