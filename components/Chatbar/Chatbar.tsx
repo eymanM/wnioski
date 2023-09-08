@@ -387,12 +387,12 @@ export const Chatbar = () => {
         handleApiKeyChange,
       }}
     >
-      <Sidebar<Conversation>
+      <Sidebar<Project>
         side={'left'}
         isOpen={showChatbar}
         addItemButtonTitle={t('New chat')}
         itemComponent={<Ala/>}
-        items={filteredConversations}
+        items={projects}
         searchTerm={searchTerm}
         handleSearchTerm={(searchTerm: string) =>
           chatDispatch({ field: 'searchTerm', value: searchTerm })
