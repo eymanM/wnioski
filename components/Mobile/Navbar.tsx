@@ -5,7 +5,7 @@ import { Conversation } from '@/types/chat';
 
 interface Props {
   selectedConversation: Conversation;
-  onNewConversation: () => void;
+  onNewConversation: (projectId: string, threadId: string) => void;
 }
 
 export const Navbar: FC<Props> = ({
@@ -22,7 +22,7 @@ export const Navbar: FC<Props> = ({
 
       <IconPlus
         className="cursor-pointer hover:text-neutral-400 mr-8"
-        onClick={onNewConversation}
+        //onClick={onNewConversation}
       />
     </nav>
   );

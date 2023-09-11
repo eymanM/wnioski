@@ -10,7 +10,7 @@ import { FC, memo, useContext, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { updateConversation } from '@/utils/app/conversation';
+//import { updateConversation } from '@/utils/app/conversation';
 
 import { Message } from '@/types/chat';
 
@@ -22,6 +22,7 @@ import { MemoizedReactMarkdown } from '../Markdown/MemoizedReactMarkdown';
 import rehypeMathjax from 'rehype-mathjax';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import {handleUpdateConversationInThread} from "@/utils/app/projs_threads";
 
 export interface Props {
   message: Message;
@@ -63,35 +64,6 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
       }
     }
     setIsEditing(false);
-  };
-
-  const handleDeleteMessage = () => {
-    if (!selectedConversation) return;
-
-    const { messages } = selectedConversation;
-    const findIndex = messages.findIndex((elm) => elm === message);
-
-    if (findIndex < 0) return;
-
-    if (
-      findIndex < messages.length - 1 &&
-      messages[findIndex + 1].role === 'assistant'
-    ) {
-      messages.splice(findIndex, 2);
-    } else {
-      messages.splice(findIndex, 1);
-    }
-    const updatedConversation = {
-      ...selectedConversation,
-      messages,
-    };
-
-    const { single, all } = updateConversation(
-      updatedConversation,
-      conversations,
-    );
-    homeDispatch({ field: 'selectedConversation', value: single });
-    homeDispatch({ field: 'conversations', value: all });
   };
 
   const handlePressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -187,23 +159,6 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
               ) : (
                 <div className="prose whitespace-pre-wrap dark:prose-invert flex-1">
                   {message.content}
-                </div>
-              )}
-
-              {!isEditing && (
-                <div className="md:-mr-8 ml-1 md:ml-0 flex flex-col md:flex-row gap-4 md:gap-1 items-center md:items-start justify-end md:justify-start">
-                  <button
-                    className="invisible group-hover:visible focus:visible text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                    onClick={toggleEditing}
-                  >
-                    <IconEdit size={20} />
-                  </button>
-                  <button
-                    className="invisible group-hover:visible focus:visible text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                    onClick={handleDeleteMessage}
-                  >
-                    <IconTrash size={20} />
-                  </button>
                 </div>
               )}
             </div>

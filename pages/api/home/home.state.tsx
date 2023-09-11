@@ -4,6 +4,7 @@ import { FolderInterface } from '@/types/folder';
 import { OpenAIModel, OpenAIModelID } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
+import {Project} from "@/components/Chatbar/Chatbar";
 
 export interface HomeInitialState {
   apiKey: string;
@@ -15,6 +16,7 @@ export interface HomeInitialState {
   models: OpenAIModel[];
   folders: FolderInterface[];
   conversations: Conversation[];
+  projects: Project[];
   selectedConversation: Conversation | undefined;
   currentMessage: Message | undefined;
   prompts: Prompt[];
@@ -39,6 +41,7 @@ export const initialState: HomeInitialState = {
   models: [],
   folders: [],
   conversations: [],
+  projects: [],
   selectedConversation: undefined,
   currentMessage: undefined,
   prompts: [],

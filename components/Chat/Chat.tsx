@@ -1,37 +1,22 @@
-import { IconClearAll, IconSettings } from '@tabler/icons-react';
-import {
-  MutableRefObject,
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import {IconClearAll, IconSettings} from '@tabler/icons-react';
+import {memo, MutableRefObject, useCallback, useContext, useEffect, useRef, useState,} from 'react';
 import toast from 'react-hot-toast';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
-import { getEndpoint } from '@/utils/app/api';
-import {
-  saveConversation,
-  saveConversations,
-  updateConversation,
-} from '@/utils/app/conversation';
-import { throttle } from '@/utils/data/throttle';
+import {getEndpoint} from '@/utils/app/api';
+import {throttle} from '@/utils/data/throttle';
 
-import { ChatBody, Conversation, Message } from '@/types/chat';
-import { Plugin } from '@/types/plugin';
+import {ChatBody, Conversation, Message} from '@/types/chat';
+import {Plugin} from '@/types/plugin';
 
 import HomeContext from '@/pages/api/home/home.context';
 
 import Spinner from '../Spinner';
-import { ChatInput } from './ChatInput';
-import { ChatLoader } from './ChatLoader';
-import { ErrorMessageDiv } from './ErrorMessageDiv';
-import { SystemPrompt } from './SystemPrompt';
-import { TemperatureSlider } from './Temperature';
-import { MemoizedChatMessage } from './MemoizedChatMessage';
+import {ChatInput} from './ChatInput';
+import {ChatLoader} from './ChatLoader';
+import {ErrorMessageDiv} from './ErrorMessageDiv';
+import {MemoizedChatMessage} from './MemoizedChatMessage';
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
@@ -194,7 +179,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               });
             }
           }
-          saveConversation(updatedConversation);
+          //saveConversation(updatedConversation);
           const updatedConversations: Conversation[] = conversations.map(
             (conversation) => {
               if (conversation.id === selectedConversation.id) {
@@ -207,7 +192,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             updatedConversations.push(updatedConversation);
           }
           homeDispatch({ field: 'conversations', value: updatedConversations });
-          saveConversations(updatedConversations);
+          //saveConversations(updatedConversations);
           homeDispatch({ field: 'messageIsStreaming', value: false });
         } else {
           const { answer } = await response.json();
@@ -219,11 +204,11 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             ...updatedConversation,
             messages: updatedMessages,
           };
-          homeDispatch({
-            field: 'selectedConversation',
-            value: updateConversation,
-          });
-          saveConversation(updatedConversation);
+          // homeDispatch({
+          //   field: 'selectedConversation',
+          //   value: updateConversation,
+          // });
+          // saveConversation(updatedConversation);
           const updatedConversations: Conversation[] = conversations.map(
             (conversation) => {
               if (conversation.id === selectedConversation.id) {
@@ -236,7 +221,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             updatedConversations.push(updatedConversation);
           }
           homeDispatch({ field: 'conversations', value: updatedConversations });
-          saveConversations(updatedConversations);
+          //saveConversations(updatedConversations);
           homeDispatch({ field: 'loading', value: false });
           homeDispatch({ field: 'messageIsStreaming', value: false });
         }
@@ -283,18 +268,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
   const handleSettings = () => {
     setShowSettings(!showSettings);
-  };
-
-  const onClearAll = () => {
-    if (
-      confirm(t<string>('Are you sure you want to clear all messages?')) &&
-      selectedConversation
-    ) {
-      handleUpdateConversation(selectedConversation, {
-        key: 'messages',
-        value: [],
-      });
-    }
   };
 
   const scrollDown = () => {
@@ -402,7 +375,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         <Spinner size="16px" className="mx-auto" />
                       </div>
                     ) : (
-                      'Chatbot UI'
+                      'Wnioski'
                     )}
                   </div>
                 </div>

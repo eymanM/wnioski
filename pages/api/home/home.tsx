@@ -1,45 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
+import React, {useEffect, useRef, useState} from 'react';
+import {useQuery} from 'react-query';
 
-import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import {GetServerSideProps} from 'next';
+import {useTranslation} from 'next-i18next';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import { useCreateReducer } from '@/hooks/useCreateReducer';
+import {useCreateReducer} from '@/hooks/useCreateReducer';
 
 import useErrorService from '@/services/errorService';
 import useApiService from '@/services/useApiService';
 
-import {
-  cleanConversationHistory,
-  cleanSelectedConversation,
-} from '@/utils/app/clean';
-import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
-import {
-  saveConversation,
-  saveConversations,
-  updateConversation,
-} from '@/utils/app/conversation';
-import { saveFolders } from '@/utils/app/folders';
-import { savePrompts } from '@/utils/app/prompts';
-import { getSettings } from '@/utils/app/settings';
+import {cleanConversationHistory, cleanSelectedConversation,} from '@/utils/app/clean';
+import {DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE} from '@/utils/app/const';
+import {saveFolders} from '@/utils/app/folders';
+import {getSettings} from '@/utils/app/settings';
 
-import { Conversation } from '@/types/chat';
-import { KeyValuePair } from '@/types/data';
-import { FolderInterface, FolderType } from '@/types/folder';
-import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
-import { Prompt } from '@/types/prompt';
-
-import { Chat } from '@/components/Chat/Chat';
-import { Chatbar } from '@/components/Chatbar/Chatbar';
-import { Navbar } from '@/components/Mobile/Navbar';
-import Promptbar from '@/components/Promptbar';
+import {Conversation} from '@/types/chat';
+import {KeyValuePair} from '@/types/data';
+import {FolderInterface, FolderType} from '@/types/folder';
+import {fallbackModelID, OpenAIModelID, OpenAIModels} from '@/types/openai';
 
 import HomeContext from './home.context';
-import { HomeInitialState, initialState } from './home.state';
+import {HomeInitialState, initialState} from './home.state';
 
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+import {
+  getProjects,
+  handleCreateProject,
+  handleCreateThreadInProject,
+  handleDeleteProject,
+  handleDeleteThreadInProject,
+  handleUpdateConversationInThread,
+  handleUpdateProject,
+  handleUpdateThreadInProject,
+  saveConversation
+} from "@/utils/app/projs_threads";
+import {Chatbar, Project, Thread} from "@/components/Chatbar/Chatbar";
+import Promptbar from "@/components/Promptbar";
+import {Chat} from "@/components/Chat/Chat";
+import {Navbar} from "@/components/Mobile/Navbar";
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -70,6 +70,7 @@ const Home = ({
       selectedConversation,
       prompts,
       temperature,
+      projects,
     },
     dispatch,
   } = contextValue;
@@ -125,55 +126,10 @@ const Home = ({
     saveFolders(updatedFolders);
   };
 
-  const handleDeleteFolder = (folderId: string) => {
-    const updatedFolders = folders.filter((f) => f.id !== folderId);
-    dispatch({ field: 'folders', value: updatedFolders });
-    saveFolders(updatedFolders);
-
-    const updatedConversations: Conversation[] = conversations.map((c) => {
-
-      return c;
-    });
-
-    dispatch({ field: 'conversations', value: updatedConversations });
-    saveConversations(updatedConversations);
-
-    const updatedPrompts: Prompt[] = prompts.map((p) => {
-      if (p.folderId === folderId) {
-        return {
-          ...p,
-          folderId: null,
-        };
-      }
-
-      return p;
-    });
-
-    dispatch({ field: 'prompts', value: updatedPrompts });
-    savePrompts(updatedPrompts);
-  };
-
-  const handleUpdateFolder = (folderId: string, name: string) => {
-    const updatedFolders = folders.map((f) => {
-      if (f.id === folderId) {
-        return {
-          ...f,
-          name,
-        };
-      }
-
-      return f;
-    });
-
-    dispatch({ field: 'folders', value: updatedFolders });
-
-    saveFolders(updatedFolders);
-  };
-
-  // CONVERSATION OPERATIONS  --------------------------------------------
-
-  const handleNewConversation = () => {
-    const lastConversation = conversations[conversations.length - 1];
+  const handleNewConversation = async (projectId: string, threadId: string) => {
+    const project = projects.find((p) => p.id === projectId)!;
+    const thread = project.threads.find((t) => t.id === threadId)!;
+    const conversations = thread.conversations;
 
     const newConversation: Conversation = {
       id: uuidv4(),
@@ -182,18 +138,23 @@ const Home = ({
       prompt: DEFAULT_SYSTEM_PROMPT,
     };
 
-    const updatedConversations = [...conversations, newConversation];
+    const updatedConversations = [...conversations || [], newConversation];
+
+    thread.conversations = updatedConversations;
+    project.threads = project.threads.map((t) => t.id === threadId ? thread : t);
 
     dispatch({ field: 'selectedConversation', value: newConversation });
+
     dispatch({ field: 'conversations', value: updatedConversations });
-
     saveConversation(newConversation);
-    saveConversations(updatedConversations);
 
+    await handleUpdateProject(project);
+    const updatedProjects = projects.map((p) => p.id === projectId ? project : p);
+    dispatch({field: 'projects', value: updatedProjects});
     dispatch({ field: 'loading', value: false });
   };
 
-  const handleUpdateConversation = (
+  const handleUpdateConversation = async (projectId: string, threadId: string,
     conversation: Conversation,
     data: KeyValuePair,
   ) => {
@@ -202,13 +163,11 @@ const Home = ({
       [data.key]: data.value,
     };
 
-    const { single, all } = updateConversation(
+    const {single, all} = await handleUpdateConversationInThread(projectId, threadId,
       updatedConversation,
-      conversations,
     );
 
     dispatch({ field: 'selectedConversation', value: single });
-    dispatch({ field: 'conversations', value: all });
   };
 
   // EFFECTS  --------------------------------------------
@@ -338,11 +297,14 @@ const Home = ({
       value={{
         ...contextValue,
         handleNewConversation,
-        handleCreateFolder,
-        handleDeleteFolder,
-        handleUpdateFolder,
         handleSelectConversation,
         handleUpdateConversation,
+        handleCreateProject,
+        handleDeleteProject,
+        handleUpdateProject,
+        handleCreateThreadInProject,
+        handleDeleteThreadInProject,
+        handleUpdateThreadInProject,
       }}
     >
       <Head>

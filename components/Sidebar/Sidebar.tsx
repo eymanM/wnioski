@@ -12,6 +12,7 @@ import Search from '../Search';
 interface Props<T> {
   isOpen: boolean;
   addItemButtonTitle: string;
+  visibleButton?: boolean;
   side: 'left' | 'right';
   items: T[];
   itemComponent: ReactNode;
@@ -26,6 +27,7 @@ interface Props<T> {
 const Sidebar = <T,>({
   isOpen,
   addItemButtonTitle,
+  visibleButton = true,
   side,
   items,
   itemComponent,
@@ -55,7 +57,7 @@ const Sidebar = <T,>({
       <div
         className={`fixed top-0 ${side}-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
       >
-        <div className="flex items-center">
+        {visibleButton ? <div className="flex items-center">
           <button
             className="text-sidebar flex w-full flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10 relative"
             onClick={() => {
@@ -66,15 +68,10 @@ const Sidebar = <T,>({
             <IconPlus size={16} />
             {addItemButtonTitle}
           </button>
-        </div>
-        <Search
-          placeholder={t('Search...') || ''}
-          searchTerm={searchTerm}
-          onSearch={handleSearchTerm}
-        />
+        </div> : null}
 
         <div className="flex-grow overflow-auto">
-          {items?.length > 0 ? (
+
             <div
               className="pt-2"
               onDrop={handleDrop}
@@ -84,14 +81,7 @@ const Sidebar = <T,>({
             >
               {itemComponent}
             </div>
-          ) : (
-            <div className="mt-8 select-none text-center text-white opacity-50">
-              <IconMistOff className="mx-auto mb-3" />
-              <span className="text-[14px] leading-normal">
-                {t('No data.')}
-              </span>
-            </div>
-          )}
+
         </div>
         {footerComponent}
       </div>

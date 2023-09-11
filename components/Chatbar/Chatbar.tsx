@@ -5,7 +5,6 @@ import {useTranslation} from 'next-i18next';
 import {useCreateReducer} from '@/hooks/useCreateReducer';
 
 import {DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE} from '@/utils/app/const';
-import {saveConversation, saveConversations} from '@/utils/app/conversation';
 import {saveFolders} from '@/utils/app/folders';
 import {exportData, importData} from '@/utils/app/importExport';
 
@@ -22,8 +21,8 @@ import ChatbarContext from './Chatbar.context';
 import {ChatbarInitialState, initialState} from './Chatbar.state';
 
 import {v4 as uuidv4} from 'uuid';
-import {Accordion, AccordionItem} from "@nextui-org/react";
-import {Conversations} from "@/components/Chatbar/components/Conversations";
+import {getProjects} from "@/utils/app/projs_threads";
+import {CollapsedAccordition} from "@/components/Chatbar/components/CollapsedAccordition";
 
 export interface Project {
   id: string;
@@ -34,7 +33,7 @@ export interface Project {
   modifiedAt: string;
 }
 
-interface Thread {
+export interface Thread {
   id: string;
   name: string;
   createdAt: string;
@@ -43,156 +42,132 @@ interface Thread {
   conversations: Conversation[];
 }
 
-const projects: Project[] = [
-  {
-    id: '1',
-    name: 'Project 1',
-    author: 'Author 1',
-    threads: [
-      {
-        id: '1',
-        name: 'Thread 1',
-        createdAt: '2021-01-01',
-        modifiedAt: '2021-01-02',
-        context: 'Context 1',
-        conversations: [
-          {
-            id: '1',
-            name: 'Conversation 1',
-            messages: [
-              {
-                role: 'assistant',
-                content: 'Message 1'
-              },
-              {
-                role: 'user',
-                content: 'Message 2'
-              }
-            ],
-            prompt: 'Prompt 1'
-          }
-        ]
-      },
-      {
-        id: '11',
-        name: 'Thread 11',
-        createdAt: '2021-01-01',
-        modifiedAt: '2021-01-02',
-        context: 'Context 1',
-        conversations: [
-          {
-            id: '11',
-            name: 'Conversation 1',
-            messages: [
-              {
-                role: 'assistant',
-                content: 'Message 1'
-              },
-              {
-                role: 'user',
-                content: 'Message 2'
-              }
-            ],
-            prompt: 'Prompt 1'
-          }
-        ]
-      }
-    ],
-    createdAt: '2021-01-01',
-    modifiedAt: '2021-01-02'
-  },
-  {
-    id: '2',
-    name: 'Project 2',
-    author: 'Author 2',
-    threads: [
-      {
-        id: '2',
-        name: 'Thread 2',
-        createdAt: '2021-02-01',
-        modifiedAt: '2021-02-02',
-        context: 'Context 2',
-        conversations: [
-          {
-            id: '2',
-            name: 'Conversation 2',
-            messages: [
-              {
-                role: 'assistant',
-                content: 'Message 3'
-              },
-              {
-                role: 'user',
-                content: 'Message 4'
-              }
-            ],
-            prompt: 'Prompt 2'
-          }
-        ]
-      }
-    ],
-    createdAt: '2021-02-01',
-    modifiedAt: '2021-02-02'
-  },
-  {
-    id: '3',
-    name: 'Project 3',
-    author: 'Author 3',
-    threads: [
-      {
-        id: '3',
-        name: 'Thread 3',
-        createdAt: '2021-03-01',
-        modifiedAt: '2021-03-02',
-        context: 'Context 3',
-        conversations: [
-          {
-            id: '3',
-            name: 'Conversation 3',
-            messages: [
-              {
-                role: 'assistant',
-                content: 'Message 5'
-              },
-              {
-                role: 'user',
-                content: 'Message 6'
-              }
-            ],
-            prompt: 'Prompt 3'
-          }
-        ]
-      }
-    ],
-    createdAt: '2021-03-01',
-    modifiedAt: '2021-03-02'
-  }
-];
+// const projects: Project[] = [
+//   {
+//     id: '1',
+//     name: 'Project 1',
+//     author: 'Author 1',
+//     threads: [
+//       {
+//         id: '1',
+//         name: 'Thread 1',
+//         createdAt: '2021-01-01',
+//         modifiedAt: '2021-01-02',
+//         context: 'Context 1',
+//         conversations: [
+//           {
+//             id: '1',
+//             name: 'Conversation 1',
+//             messages: [
+//               {
+//                 role: 'assistant',
+//                 content: 'Message 1'
+//               },
+//               {
+//                 role: 'user',
+//                 content: 'Message 2'
+//               }
+//             ],
+//             prompt: 'Prompt 1'
+//           }
+//         ]
+//       },
+//       {
+//         id: '11',
+//         name: 'Thread 11',
+//         createdAt: '2021-01-01',
+//         modifiedAt: '2021-01-02',
+//         context: 'Context 1',
+//         conversations: [
+//           {
+//             id: '11',
+//             name: 'Conversation 1',
+//             messages: [
+//               {
+//                 role: 'assistant',
+//                 content: 'Message 1'
+//               },
+//               {
+//                 role: 'user',
+//                 content: 'Message 2'
+//               }
+//             ],
+//             prompt: 'Prompt 1'
+//           }
+//         ]
+//       }
+//     ],
+//     createdAt: '2021-01-01',
+//     modifiedAt: '2021-01-02'
+//   },
+//   {
+//     id: '2',
+//     name: 'Project 2',
+//     author: 'Author 2',
+//     threads: [
+//       {
+//         id: '2',
+//         name: 'Thread 2',
+//         createdAt: '2021-02-01',
+//         modifiedAt: '2021-02-02',
+//         context: 'Context 2',
+//         conversations: [
+//           {
+//             id: '2',
+//             name: 'Conversation 2',
+//             messages: [
+//               {
+//                 role: 'assistant',
+//                 content: 'Message 3'
+//               },
+//               {
+//                 role: 'user',
+//                 content: 'Message 4'
+//               }
+//             ],
+//             prompt: 'Prompt 2'
+//           }
+//         ]
+//       }
+//     ],
+//     createdAt: '2021-02-01',
+//     modifiedAt: '2021-02-02'
+//   },
+//   {
+//     id: '3',
+//     name: 'Project 3',
+//     author: 'Author 3',
+//     threads: [
+//       {
+//         id: '3',
+//         name: 'Thread 3',
+//         createdAt: '2021-03-01',
+//         modifiedAt: '2021-03-02',
+//         context: 'Context 3',
+//         conversations: [
+//           {
+//             id: '3',
+//             name: 'Conversation 3',
+//             messages: [
+//               {
+//                 role: 'assistant',
+//                 content: 'Message 5'
+//               },
+//               {
+//                 role: 'user',
+//                 content: 'Message 6'
+//               }
+//             ],
+//             prompt: 'Prompt 3'
+//           }
+//         ]
+//       }
+//     ],
+//     createdAt: '2021-03-01',
+//     modifiedAt: '2021-03-02'
+//   }
+// ];
 
-function Ala() {
-  const defaultContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
-  return (
-    <Accordion variant='shadow'>
-      {projects.map((project) => {
-        return (
-          <AccordionItem key={project.id} title={project.name}>
-            <Accordion isCompact={true} variant='light'>
-              {project.threads.map((thread) => {
-                return (
-                  <AccordionItem key={thread.id} title={thread.name}>
-                      <Conversations conversations={thread.conversations}/>
-                  </AccordionItem>
-                )
-              })}
-            </Accordion>
-          </AccordionItem>
-        )
-      })}
-    </Accordion>
-  )
-}
 
 export const Chatbar = () => {
   const { t } = useTranslation('sidebar');
@@ -202,11 +177,12 @@ export const Chatbar = () => {
   });
 
   const {
-    state: { conversations, showChatbar, defaultModelId, folders, pluginKeys },
+    state: {conversations, projects, showChatbar, defaultModelId, folders, pluginKeys},
     dispatch: homeDispatch,
-    handleCreateFolder,
     handleNewConversation,
     handleUpdateConversation,
+    handleCreateProject,
+    handleCreateThreadInProject,
   } = useContext(HomeContext);
 
   const {
@@ -262,6 +238,36 @@ export const Chatbar = () => {
     localStorage.setItem('pluginKeys', JSON.stringify(updatedPluginKeys));
   };
 
+  const createThread = async (projectId: string) => {
+    const thread: Thread = {
+      id: uuidv4(),
+      name: 'New Thread',
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString(),
+      context: 'ala',
+      conversations: []
+    };
+
+    await handleCreateThreadInProject(projectId, thread);
+
+    homeDispatch({field: 'projects', value: await getProjects()});
+  }
+
+  const createProject = async (name: string) => {
+    const project: Project = {
+      id: uuidv4(),
+      name: name,
+      author: 'Author 1',
+      threads: [],
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString()
+    }
+
+    await handleCreateProject(project);
+
+    homeDispatch({field: 'projects', value: await getProjects()});
+  }
+
   const handleExportData = () => {
     exportData();
   };
@@ -305,53 +311,9 @@ export const Chatbar = () => {
     saveFolders(updatedFolders);
   };
 
-  const handleDeleteConversation = (conversation: Conversation) => {
-    const updatedConversations = conversations.filter(
-      (c) => c.id !== conversation.id,
-    );
-
-    homeDispatch({ field: 'conversations', value: updatedConversations });
-    chatDispatch({ field: 'searchTerm', value: '' });
-    saveConversations(updatedConversations);
-
-    if (updatedConversations.length > 0) {
-      homeDispatch({
-        field: 'selectedConversation',
-        value: updatedConversations[updatedConversations.length - 1],
-      });
-
-      saveConversation(updatedConversations[updatedConversations.length - 1]);
-    } else {
-      defaultModelId &&
-        homeDispatch({
-          field: 'selectedConversation',
-          value: {
-            id: uuidv4(),
-            name: t('New Conversation'),
-            messages: [],
-            model: OpenAIModels[defaultModelId],
-            prompt: DEFAULT_SYSTEM_PROMPT,
-            temperature: DEFAULT_TEMPERATURE,
-            folderId: null,
-          },
-        });
-
-      localStorage.removeItem('selectedConversation');
-    }
-  };
-
   const handleToggleChatbar = () => {
     homeDispatch({ field: 'showChatbar', value: !showChatbar });
     localStorage.setItem('showChatbar', JSON.stringify(!showChatbar));
-  };
-
-  const handleDrop = (e: any) => {
-    if (e.dataTransfer) {
-      const conversation = JSON.parse(e.dataTransfer.getData('conversation'));
-      handleUpdateConversation(conversation, { key: 'folderId', value: 0 });
-      chatDispatch({ field: 'searchTerm', value: '' });
-      e.target.style.background = 'none';
-    }
   };
 
   useEffect(() => {
@@ -378,7 +340,6 @@ export const Chatbar = () => {
     <ChatbarContext.Provider
       value={{
         ...chatBarContextValue,
-        handleDeleteConversation,
         handleClearConversations,
         handleImportConversations,
         handleExportData,
@@ -391,15 +352,16 @@ export const Chatbar = () => {
         side={'left'}
         isOpen={showChatbar}
         addItemButtonTitle={t('New chat')}
-        itemComponent={<Ala/>}
+        visibleButton={false}
+        itemComponent={<CollapsedAccordition projects={projects} handleCreateProject={createProject} handleCreateThreadInProject={createThread} handleCreateConversation={handleNewConversation}/>}
         items={projects}
         searchTerm={searchTerm}
         handleSearchTerm={(searchTerm: string) =>
           chatDispatch({ field: 'searchTerm', value: searchTerm })
         }
         toggleOpen={handleToggleChatbar}
-        handleCreateItem={handleNewConversation}
-        handleDrop={handleDrop}
+        handleCreateItem={() => console.log('create project')}
+        handleDrop={() => console.log('drop')}
         footerComponent={<ChatbarSettings />}
       />
     </ChatbarContext.Provider>
