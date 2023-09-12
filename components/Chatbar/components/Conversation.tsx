@@ -17,7 +17,7 @@ export const ConversationComponent = ({ conversation }: Props) => {
     handleUpdateConversation,
   } = useContext(HomeContext);
 
-  const { handleDeleteConversation } = useContext(ChatbarContext);
+  //const { handleDeleteConversation } = useContext(ChatbarContext);
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);

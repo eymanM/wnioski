@@ -1,13 +1,13 @@
-import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
-import { OpenAIError, OpenAIStream } from '@/utils/server';
+import {DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE} from '@/utils/app/const';
+import {OpenAIError, OpenAIStream} from '@/utils/server';
 
-import { ChatBody, Message } from '@/types/chat';
+import {ChatBody, Message} from '@/types/chat';
 
 // @ts-expect-error
 import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
 
 import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
-import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
+import {init, Tiktoken} from '@dqbd/tiktoken/lite/init';
 import {OpenAIModels} from "@/types/openai";
 
 export const config = {
@@ -49,7 +49,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     encoding.free();
-
+    console.log(promptToSend);
     const stream = await OpenAIStream(OpenAIModels["gpt-3.5-turbo"], promptToSend, temperatureToUse, key, messagesToSend);
 
     return new Response(stream);

@@ -30,10 +30,10 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
         projects.map((project) => (
           <div key={project.id}>
             <div
-              className='flex w-full justify-between p-2 my-2 hover:bg-gray-900 rounded cursor-pointer'
+              className='flex justify-between p-2 my-2 hover:bg-gray-900 rounded cursor-pointer'
               onClick={() => setAccordionOpen(!isAccordionOpen)}
             >
-              <div className='flex cursor-default'>
+              <div className='flex gap-2 cursor-default'>
                 <div className='flex items-center'>{project.name}</div>
               </div>
 
@@ -44,7 +44,7 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
                   await handleCreateThreadInProject(project.id);
                 }}
                 className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                title='Add new project'
+                title='Add new thread'
               >
                 <IconPlus size={16}/>
               </button>
@@ -54,9 +54,10 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
             {isAccordionOpen && (
               <div>
                 {project.threads.map((thread) => (
+                  <div key={thread.id} className='flex flex-col justify-items-stretch'>
                   <div
                     key={thread.id}
-                    className='flex justify-between p-2 my-2 m-4 cursor-pointer rounded shadow-sm hover:bg-gray-600'
+                    className='flex justify-between p-2 my-2 ml-4 cursor-pointer rounded shadow-sm hover:bg-gray-600'
                     onClick={() => setInnerAccordionOpen(!isInnerAccordionOpen)}
                   >
                     {thread.name}
@@ -66,15 +67,19 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
                         e.stopPropagation();
                         await handleCreateConversation(project.id, thread.id);
                       }}
-                      className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                      title='Add new project'
+                      className='flex flex-col items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
+                      title='Add new conversation'
                     >
                       <IconPlus size={16}/>
                     </button>
-                    {isInnerAccordionOpen && (
-                      <Conversations conversations={thread.conversations}/>
-                    )}
                   </div>
+                    <div className='flex w-full ml-9 justify-items-stretch'>
+                      {isInnerAccordionOpen && (
+                        <Conversations conversations={thread.conversations}/>
+                      )}
+                    </div>
+                  </div>
+
                 ))}
               </div>
             )}

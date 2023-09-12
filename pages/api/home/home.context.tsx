@@ -14,6 +14,7 @@ export interface HomeContextProps {
   dispatch: Dispatch<ActionType<HomeInitialState>>;
   handleNewConversation: (projectId: string, threadId: string) => Promise<void>;
   handleSelectConversation: (conversation: Conversation) => void;
+  handleSelectProjAndThread: (projectId: string, threadId: string) => void;
   handleUpdateConversation: (projectId: string, threadId: string,
     conversation: Conversation,
     data: KeyValuePair,

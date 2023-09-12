@@ -111,19 +111,13 @@ const Home = ({
     saveConversation(conversation);
   };
 
-  // FOLDER OPERATIONS  --------------------------------------------
+   const handleSelectProjAndThread = (projectId: string, threadId: string) => {
+    dispatch({
+      field: 'selectedProjAndThread',
+      value: {projectId, threadId},
+    });
 
-  const handleCreateFolder = (name: string, type: FolderType) => {
-    const newFolder: FolderInterface = {
-      id: uuidv4(),
-      name,
-      type,
-    };
-
-    const updatedFolders = [...folders, newFolder];
-
-    dispatch({ field: 'folders', value: updatedFolders });
-    saveFolders(updatedFolders);
+    ///saveConversation(conversation);
   };
 
   const handleNewConversation = async (projectId: string, threadId: string) => {
@@ -298,6 +292,7 @@ const Home = ({
         ...contextValue,
         handleNewConversation,
         handleSelectConversation,
+        handleSelectProjAndThread,
         handleUpdateConversation,
         handleCreateProject,
         handleDeleteProject,
