@@ -1,6 +1,6 @@
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 
-export const updatePrompt = (updatedPrompt: Prompt, allPrompts: Prompt[]) => {
+export const updatePrompt = (updatedPrompt: Snippet, allPrompts: Snippet[]) => {
   const updatedPrompts = allPrompts.map((c) => {
     if (c.id === updatedPrompt.id) {
       return updatedPrompt;
@@ -17,6 +17,6 @@ export const updatePrompt = (updatedPrompt: Prompt, allPrompts: Prompt[]) => {
   };
 };
 
-export const savePrompts = (prompts: Prompt[]) => {
+export const savePrompts = (prompts: Snippet[]) => {
   localStorage.setItem('prompts', JSON.stringify(prompts));
 };

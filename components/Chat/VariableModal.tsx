@@ -1,9 +1,9 @@
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 
 interface Props {
-  prompt: Prompt;
+  prompt: Snippet;
   variables: string[];
   onSubmit: (updatedVariables: string[]) => void;
   onClose: () => void;

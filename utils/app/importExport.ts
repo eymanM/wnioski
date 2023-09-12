@@ -8,7 +8,7 @@ import {
   SupportedExportFormats,
 } from '@/types/export';
 import { FolderInterface } from '@/types/folder';
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 
 import { cleanConversationHistory } from './clean';
 
@@ -149,7 +149,7 @@ export const importData = (
 
   const oldPrompts = localStorage.getItem('prompts');
   const oldPromptsParsed = oldPrompts ? JSON.parse(oldPrompts) : [];
-  const newPrompts: Prompt[] = [...oldPromptsParsed, ...prompts].filter(
+  const newPrompts: Snippet[] = [...oldPromptsParsed, ...prompts].filter(
     (prompt, index, self) =>
       index === self.findIndex((p) => p.id === prompt.id),
   );

@@ -1,24 +1,21 @@
-import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useContext, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import { useCreateReducer } from '@/hooks/useCreateReducer';
+import {useCreateReducer} from '@/hooks/useCreateReducer';
 
-import { savePrompts } from '@/utils/app/prompts';
+import {savePrompts} from '@/utils/app/prompts';
 
-import { OpenAIModels } from '@/types/openai';
-import { Prompt } from '@/types/prompt';
+import {OpenAIModels} from '@/types/openai';
+import {Snippet} from '@/types/snippet';
 
 import HomeContext from '@/pages/api/home/home.context';
-
-import { PromptFolders } from './components/PromptFolders';
-import { PromptbarSettings } from './components/PromptbarSettings';
-import { Prompts } from './components/Prompts';
+import {Prompts} from './components/Prompts';
 
 import Sidebar from '../Sidebar';
 import PromptbarContext from './PromptBar.context';
-import { PromptbarInitialState, initialState } from './Promptbar.state';
+import {initialState, PromptbarInitialState} from './Promptbar.state';
 
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 const Promptbar = () => {
   const { t } = useTranslation('promptbar');
@@ -30,7 +27,6 @@ const Promptbar = () => {
   const {
     state: { prompts, defaultModelId, showPromptbar },
     dispatch: homeDispatch,
-    handleCreateFolder,
   } = useContext(HomeContext);
 
   const {
@@ -45,16 +41,16 @@ const Promptbar = () => {
 
   const handleCreatePrompt = () => {
     if (defaultModelId) {
-      const newPrompt: Prompt = {
+      const newPrompt: Snippet = {
         id: uuidv4(),
         name: `Snippet ${prompts.length + 1}`,
         description: '',
         content: '',
-        model: OpenAIModels[defaultModelId],
-        folderId: null,
       };
 
       const updatedPrompts = [...prompts, newPrompt];
+
+
 
       homeDispatch({ field: 'prompts', value: updatedPrompts });
 
@@ -62,14 +58,14 @@ const Promptbar = () => {
     }
   };
 
-  const handleDeletePrompt = (prompt: Prompt) => {
+  const handleDeletePrompt = (prompt: Snippet) => {
     const updatedPrompts = prompts.filter((p) => p.id !== prompt.id);
 
     homeDispatch({ field: 'prompts', value: updatedPrompts });
     savePrompts(updatedPrompts);
   };
 
-  const handleUpdatePrompt = (prompt: Prompt) => {
+  const handleUpdatePrompt = (prompt: Snippet) => {
     const updatedPrompts = prompts.map((p) => {
       if (p.id === prompt.id) {
         return prompt;
@@ -125,13 +121,13 @@ const Promptbar = () => {
         handleUpdatePrompt,
       }}
     >
-      <Sidebar<Prompt>
+      <Sidebar<Snippet>
         side={'right'}
         isOpen={showPromptbar}
         addItemButtonTitle='Snippet'
         itemComponent={
           <Prompts
-            prompts={filteredPrompts.filter((prompt) => !prompt.folderId)}
+            prompts={filteredPrompts}
           />
         }
         items={filteredPrompts}

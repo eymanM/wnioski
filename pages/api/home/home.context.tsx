@@ -4,27 +4,20 @@ import {ActionType} from '@/hooks/useCreateReducer';
 
 import {Conversation} from '@/types/chat';
 import {KeyValuePair} from '@/types/data';
-import {FolderType} from '@/types/folder';
 
 import {HomeInitialState} from './home.state';
-import {Project, Thread} from "@/components/Chatbar/Chatbar";
+import {Project} from "@/components/Chatbar/Chatbar";
 
 export interface HomeContextProps {
   state: HomeInitialState;
   dispatch: Dispatch<ActionType<HomeInitialState>>;
-  handleNewConversation: (projectId: string, threadId: string) => Promise<void>;
+  handleNewConversation: (projectId: string) => Promise<void>;
   handleSelectConversation: (conversation: Conversation) => void;
-  handleSelectProjAndThread: (projectId: string, threadId: string) => void;
-  handleUpdateConversation: (projectId: string, threadId: string,
-    conversation: Conversation,
-    data: KeyValuePair,
-  ) => void;
+  handleSelectProj: (projectId: string, threadId: string) => void;
   handleCreateProject: (project: Project) => void;
   handleDeleteProject: (projectId: string) => void;
   handleUpdateProject: (project: Project) => void;
-  handleCreateThreadInProject: (projectId: string, thread: Thread) => void;
-  handleDeleteThreadInProject: (projectId: string, threadId: string) => void;
-  handleUpdateThreadInProject: (projectId: string, thread: Thread) => void;
+  handleUpdateConversation: (projectId: string, conversation: Conversation, data: KeyValuePair) => void;
 }
 
 const HomeContext = createContext<HomeContextProps>(undefined!);

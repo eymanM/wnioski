@@ -1,4 +1,5 @@
 import { OpenAIModel } from './openai';
+import {Snippet} from "@/types/snippet";
 
 export interface Message {
   role: Role;
@@ -18,4 +19,9 @@ export interface Conversation {
   name: string;
   messages: Message[];
   prompt: string;
+  outcome?: string;
+  createdAt: string;
+  modifiedAt: string;
+  context: string;
+  snippets: Snippet[];
 }

@@ -13,12 +13,10 @@ import useApiService from '@/services/useApiService';
 
 import {cleanConversationHistory, cleanSelectedConversation,} from '@/utils/app/clean';
 import {DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE} from '@/utils/app/const';
-import {saveFolders} from '@/utils/app/folders';
 import {getSettings} from '@/utils/app/settings';
 
 import {Conversation} from '@/types/chat';
 import {KeyValuePair} from '@/types/data';
-import {FolderInterface, FolderType} from '@/types/folder';
 import {fallbackModelID, OpenAIModelID, OpenAIModels} from '@/types/openai';
 
 import HomeContext from './home.context';
@@ -26,17 +24,13 @@ import {HomeInitialState, initialState} from './home.state';
 
 import {v4 as uuidv4} from 'uuid';
 import {
-  getProjects,
   handleCreateProject,
-  handleCreateThreadInProject,
   handleDeleteProject,
-  handleDeleteThreadInProject,
-  handleUpdateConversationInThread,
+  handleUpdateConversationInProject,
   handleUpdateProject,
-  handleUpdateThreadInProject,
   saveConversation
 } from "@/utils/app/projs_threads";
-import {Chatbar, Project, Thread} from "@/components/Chatbar/Chatbar";
+import {Chatbar} from "@/components/Chatbar/Chatbar";
 import Promptbar from "@/components/Promptbar";
 import {Chat} from "@/components/Chat/Chat";
 import {Navbar} from "@/components/Mobile/Navbar";
@@ -111,31 +105,34 @@ const Home = ({
     saveConversation(conversation);
   };
 
-   const handleSelectProjAndThread = (projectId: string, threadId: string) => {
+  const handleSelectProj = (projectId: string, threadId: string) => {
     dispatch({
-      field: 'selectedProjAndThread',
-      value: {projectId, threadId},
+      field: 'selectedProj',
+      value: {projectId},
     });
 
-    ///saveConversation(conversation);
+    localStorage.setItem('selectedProj', projectId);
   };
 
-  const handleNewConversation = async (projectId: string, threadId: string) => {
+  const handleNewConversation = async (projectId: string) => {
     const project = projects.find((p) => p.id === projectId)!;
-    const thread = project.threads.find((t) => t.id === threadId)!;
-    const conversations = thread.conversations;
+    const conversations = project.conversations;
 
     const newConversation: Conversation = {
       id: uuidv4(),
       name: t('New Conversation'),
       messages: [],
       prompt: DEFAULT_SYSTEM_PROMPT,
+      outcome: '',
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString(),
+      context: '',
+      snippets: [],
     };
 
     const updatedConversations = [...conversations || [], newConversation];
 
-    thread.conversations = updatedConversations;
-    project.threads = project.threads.map((t) => t.id === threadId ? thread : t);
+    project.conversations = updatedConversations
 
     dispatch({ field: 'selectedConversation', value: newConversation });
 
@@ -148,7 +145,8 @@ const Home = ({
     dispatch({ field: 'loading', value: false });
   };
 
-  const handleUpdateConversation = async (projectId: string, threadId: string,
+  const handleUpdateConversation = async (
+    projectId: string,
     conversation: Conversation,
     data: KeyValuePair,
   ) => {
@@ -157,7 +155,7 @@ const Home = ({
       [data.key]: data.value,
     };
 
-    const {single, all} = await handleUpdateConversationInThread(projectId, threadId,
+    const {single, all} = await handleUpdateConversationInProject(projectId,
       updatedConversation,
     );
 
@@ -292,14 +290,11 @@ const Home = ({
         ...contextValue,
         handleNewConversation,
         handleSelectConversation,
-        handleSelectProjAndThread,
-        handleUpdateConversation,
+        handleSelectProj,
         handleCreateProject,
         handleDeleteProject,
         handleUpdateProject,
-        handleCreateThreadInProject,
-        handleDeleteThreadInProject,
-        handleUpdateThreadInProject,
+        handleUpdateConversation
       }}
     >
       <Head>

@@ -1,9 +1,9 @@
 import { FC, MutableRefObject } from 'react';
 
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 
 interface Props {
-  prompts: Prompt[];
+  prompts: Snippet[];
   activePromptIndex: number;
   onSelect: () => void;
   onMouseOver: (index: number) => void;

@@ -2,7 +2,7 @@ import { Dispatch, createContext } from 'react';
 
 import { ActionType } from '@/hooks/useCreateReducer';
 
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 
 import { PromptbarInitialState } from './Promptbar.state';
 
@@ -10,8 +10,8 @@ export interface PromptbarContextProps {
   state: PromptbarInitialState;
   dispatch: Dispatch<ActionType<PromptbarInitialState>>;
   handleCreatePrompt: () => void;
-  handleDeletePrompt: (prompt: Prompt) => void;
-  handleUpdatePrompt: (prompt: Prompt) => void;
+  handleDeletePrompt: (prompt: Snippet) => void;
+  handleUpdatePrompt: (prompt: Snippet) => void;
 }
 
 const PromptbarContext = createContext<PromptbarContextProps>(undefined!);

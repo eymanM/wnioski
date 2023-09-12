@@ -14,7 +14,7 @@ import { useTranslation } from 'next-i18next';
 
 //import { updateConversation } from '@/utils/app/conversation';
 
-import { Message } from '@/types/chat';
+import {Conversation, Message} from '@/types/chat';
 
 import HomeContext from '@/pages/api/home/home.context';
 
@@ -24,7 +24,8 @@ import { MemoizedReactMarkdown } from '../Markdown/MemoizedReactMarkdown';
 import rehypeMathjax from 'rehype-mathjax';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
-import {handleUpdateConversationInThread} from "@/utils/app/projs_threads";
+import {OutcomeModal} from "@/components/Promptbar/components/OutcomeModal";
+import {getProjects, handleUpdateConversationInProject} from "@/utils/app/projs_threads";
 
 export interface Props {
   message: Message;
@@ -44,6 +45,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messageContent, setMessageContent] = useState(message.content);
   const [addedToContext, setAddedToContext] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -58,6 +60,14 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
+
+   const handleUpdate = async (conversation: Conversation) => {
+    const selectedProjId = localStorage.getItem('selectedProjectId')!
+    await handleUpdateConversationInProject(selectedProjId, conversation)
+    const projs = await getProjects();
+
+    homeDispatch({field: 'projects', value: projs});
+  }
 
   const handleEditMessage = () => {
     if (message.content != messageContent) {
@@ -75,9 +85,6 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
     }
   };
 
-  const copyOnClick = () => {
-    setAddedToContext(true);
-  };
 
   useEffect(() => {
     setMessageContent(message.content);
@@ -216,25 +223,27 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                 }`}
               </MemoizedReactMarkdown>
 
-              <div className="md:-mr-8 ml-1 md:ml-0 flex flex-col md:flex-row gap-4 md:gap-1 items-center md:items-start justify-end md:justify-start">
-                {addedToContext ? (
-                  <IconCheck
-                    size={20}
-                    className="text-green-500 dark:text-green-400"
-                  />
-                ) : (
+              {selectedConversation?.outcome ? null : <div className="md:-mr-8 ml-1 md:ml-0 flex flex-col md:flex-row gap-4 md:gap-1 items-center md:items-start justify-end md:justify-start">
+                {(
                   <button
                     className="invisible group-hover:visible focus:visible text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                    onClick={copyOnClick}
+                    onClick={() => setShowModal(true)}
                   >
                     <IconAdjustmentsFilled size={20} />
                   </button>
                 )}
-              </div>
+              </div>}
             </div>
           )}
         </div>
       </div>
+      {showModal && (
+        <OutcomeModal
+          conversation={JSON.parse(localStorage.getItem('selectedConversation')!)}
+          onClose={() => setShowModal(false)}
+          onUpdate={handleUpdate}
+        />
+      )}
     </div>
   );
 });

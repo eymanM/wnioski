@@ -1,4 +1,4 @@
-import {Project, Thread} from "@/components/Chatbar/Chatbar";
+import {Project} from "@/components/Chatbar/Chatbar";
 import {Conversation} from "@/types/chat";
 
 
@@ -46,8 +46,7 @@ export const handleDeleteProject = async (projectId: string) => {
   saveProject(updatedStorage);
 }
 
-// similar method for create Theread
-export const handleCreateThreadInProject = async (projectId: string, thread: Thread) => {
+export const handleCreateConversationInProject = async (projectId: string, conversation: Conversation) => {
   const projsStorageObj = localStorage.getItem('projects');
   const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
 
@@ -55,7 +54,7 @@ export const handleCreateThreadInProject = async (projectId: string, thread: Thr
     if (p.id === projectId) {
       return {
         ...p,
-        threads: [...p.threads, thread],
+        conversations: [...p.conversations, conversation],
       };
     }
     return p;
@@ -64,7 +63,7 @@ export const handleCreateThreadInProject = async (projectId: string, thread: Thr
   saveProject(updatedStorage);
 }
 
-export const handleUpdateThreadInProject = async (projectId: string, thread: Thread) => {
+export const handleUpdateConversationInProject = async (projectId: string, conversation: Conversation) => {
   const projsStorageObj = localStorage.getItem('projects');
   const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
 
@@ -72,11 +71,11 @@ export const handleUpdateThreadInProject = async (projectId: string, thread: Thr
     if (p.id === projectId) {
       return {
         ...p,
-        threads: p.threads.map((t: Thread) => {
-          if (t.id === thread.id) {
-            return thread;
+        conversations: p.conversations.map((c: Conversation) => {
+          if (c.id === conversation.id) {
+            return conversation;
           }
-          return t;
+          return c;
         }),
       };
     }
@@ -84,80 +83,7 @@ export const handleUpdateThreadInProject = async (projectId: string, thread: Thr
   });
 
   saveProject(updatedStorage);
-}
-
-export const handleDeleteThreadInProject = async (projectId: string, threadId: string) => {
-  const projsStorageObj = localStorage.getItem('projects');
-  const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
-
-  const updatedStorage = projsStorage.map((p: Project) => {
-    if (p.id === projectId) {
-      return {
-        ...p,
-        threads: p.threads.filter((t: Thread) => t.id !== threadId),
-      };
-    }
-    return p;
-  });
-
-  saveProject(updatedStorage);
-}
-
-// create method for conversation in thread
-export const handleCreateConversationInThread = async (projectId: string, threadId: string, conversation: Conversation) => {
-  const projsStorageObj = localStorage.getItem('projects');
-  const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
-
-  const updatedStorage = projsStorage.map((p: Project) => {
-    if (p.id === projectId) {
-      return {
-        ...p,
-        threads: p.threads.map((t: Thread) => {
-          if (t.id === threadId) {
-            return {
-              ...t,
-              conversations: [...t.conversations, conversation],
-            };
-          }
-          return t;
-        }),
-      };
-    }
-    return p;
-  });
-
-  saveProject(updatedStorage);
-}
-
-export const handleUpdateConversationInThread = async (projectId: string, threadId: string, conversation: Conversation) => {
-  const projsStorageObj = localStorage.getItem('projects');
-  const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
-
-  const updatedStorage = projsStorage.map((p: Project) => {
-    if (p.id === projectId) {
-      return {
-        ...p,
-        threads: p.threads.map((t: Thread) => {
-          if (t.id === threadId) {
-            return {
-              ...t,
-              conversations: t.conversations.map((c: any) => {
-                if (c.id === conversation.id) {
-                  return conversation;
-                }
-                return c;
-              }),
-            };
-          }
-          return t;
-        }),
-      };
-    }
-    return p;
-  });
-
-  saveProject(updatedStorage);
-  const conversations = projsStorage.find((p: Project) => p.id === projectId).threads.find((t: Thread) => t.id === threadId).conversations;
+  const conversations = projsStorage.find((p: Project) => p.id === projectId).conversations;
 
     return {
     single: conversation,

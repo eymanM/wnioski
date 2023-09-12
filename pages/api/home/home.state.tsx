@@ -3,7 +3,7 @@ import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
 import { OpenAIModel, OpenAIModelID } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 import {Project} from "@/components/Chatbar/Chatbar";
 
 export interface HomeInitialState {
@@ -16,11 +16,11 @@ export interface HomeInitialState {
   models: OpenAIModel[];
   folders: FolderInterface[];
   conversations: Conversation[];
-  selectedProjAndThread: { projectId: string; threadId: string } | undefined;
+  selectedProj: string | undefined;
   projects: Project[];
   selectedConversation: Conversation | undefined;
   currentMessage: Message | undefined;
-  prompts: Prompt[];
+  prompts: Snippet[];
   temperature: number;
   showChatbar: boolean;
   showPromptbar: boolean;
@@ -42,7 +42,7 @@ export const initialState: HomeInitialState = {
   models: [],
   folders: [],
   conversations: [],
-  selectedProjAndThread: undefined,
+  selectedProj: undefined,
   projects: [],
   selectedConversation: undefined,
   currentMessage: undefined,

@@ -28,11 +28,6 @@ export const ChatbarSettings = () => {
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
-  const {
-    handleImportConversations,
-    handleExportData,
-  } = useContext(ChatbarContext);
-
   return (
     <div className="flex flex-col items-center space-y-1 border-t border-white/20 pt-1 text-sm">
       <SidebarButton

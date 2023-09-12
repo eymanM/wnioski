@@ -1,27 +1,41 @@
-import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
-
-import { useTranslation } from 'next-i18next';
-
-import { Snippet } from '@/types/snippet';
+import {FC, KeyboardEvent, useContext, useEffect, useRef, useState} from 'react';
+import {Conversation} from "@/types/chat";
+import HomeContext from "@/pages/api/home/home.context";
+import {Snippet} from "@/types/snippet";
 
 interface Props {
-  prompt: Snippet;
+  conversation: Conversation;
   onClose: () => void;
-  onUpdatePrompt: (prompt: Snippet) => void;
+  onUpdate: (conversation: Conversation) => void;
 }
 
-export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
-  const { t } = useTranslation('promptbar');
-  const [name, setName] = useState(prompt.name);
-  const [description, setDescription] = useState(prompt.description);
-  const [content, setContent] = useState(prompt.content);
-
+export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
+  const [name, setName] = useState(conversation.name);
+  const [outcome, setOutcome] = useState(conversation.outcome);
+  //const [snippets, setSnippets] = useState(conversation.snippets);
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
+  const [selectedSnippets, setSelectedSnippets] = useState<Snippet[]>(conversation.snippets);
+
+  const toggleSnippet = (snippet: Snippet) => {
+    setSelectedSnippets((prev) => {
+      if (prev.find((s) => s.id == snippet.id)) {
+        return prev.filter(s => s.id !== snippet.id)
+      } else {
+        return [...prev, snippet]
+      }
+    })
+  }
+
+  const {
+    state: {prompts},
+    dispatch: homeDispatch,
+  } = useContext(HomeContext);
+
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      onUpdatePrompt({ ...prompt, name, description, content: content.trim() });
+      onUpdate({...conversation, name, outcome});
       onClose();
     }
   };
@@ -66,57 +80,69 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             className="dark:border-netural-400 inline-block max-h-[400px] transform overflow-y-auto rounded-lg border border-gray-300 bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-[#202123] sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
             role="dialog"
           >
+            <div className="text-2xl mb-4 items-center flex justify-center text-black dark:text-neutral-300">
+              {conversation.name}
+            </div>
+
             <div className="text-sm font-bold text-black dark:text-neutral-200">
-              {t('Name')}
+              Name
             </div>
             <input
               ref={nameInputRef}
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
-              placeholder={t('A name for your prompt.') || ''}
+              placeholder='Name of your AI conversation for this thread.'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {t('Description')}
+              Outcome
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
-              style={{ resize: 'none' }}
-              placeholder={'A description for your snippet'}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
+              style={{resize: 'none'}}
+              placeholder='Result (outcome) of your AI conversation for this thread.'
+              value={outcome}
+              onChange={(e) => setOutcome(e.target.value)}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {'Snippet'}
+              Snippets
             </div>
-            <textarea
-              className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
-              style={{ resize: 'none' }}
-              placeholder={'Your snippet'}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={10}
-            />
+
+            <div>
+              {prompts.map((snippet) => (
+                <div key={snippet.id} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedSnippets.find(((s) => s.id == snippet.id)) != null}
+                    onChange={() => toggleSnippet(snippet)}
+                    className="cursor-pointer"
+                  />
+
+                  <div className="font-normal text-lg">
+                    {snippet.name}
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <button
               type="button"
               className="w-full px-4 py-2 mt-6 border rounded-lg shadow border-neutral-500 text-neutral-900 hover:bg-neutral-100 focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-white dark:text-black dark:hover:bg-neutral-300"
               onClick={() => {
-                const updatedPrompt = {
-                  ...prompt,
+                const updatedConversation: Conversation = {
+                  ...conversation,
                   name,
-                  description,
-                  content: content.trim(),
+                  snippets: selectedSnippets,
+                  outcome
                 };
 
-                onUpdatePrompt(updatedPrompt);
+                onUpdate(updatedConversation);
                 onClose();
               }}
             >
-              {t('Save')}
+              Save
             </button>
           </div>
         </div>

@@ -12,14 +12,14 @@ import { useTranslation } from 'next-i18next';
 import { DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
 
 import { Conversation } from '@/types/chat';
-import { Prompt } from '@/types/prompt';
+import { Snippet } from '@/types/snippet';
 
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
 
 interface Props {
   conversation: Conversation;
-  prompts: Prompt[];
+  prompts: Snippet[];
   onChangePrompt: (prompt: string) => void;
 }
 
@@ -100,7 +100,7 @@ export const SystemPrompt: FC<Props> = ({
     }
   }, []);
 
-  const handlePromptSelect = (prompt: Prompt) => {
+  const handlePromptSelect = (prompt: Snippet) => {
     const parsedVariables = parseVariables(prompt.content);
     setVariables(parsedVariables);
 
