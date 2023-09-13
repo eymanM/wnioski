@@ -9,10 +9,10 @@ interface Props {
   onClearConversations: () => void;
 }
 
-export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
+export const ClearConversations: FC<Props> = ({onClearConversations}) => {
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
 
-  const { t } = useTranslation('sidebar');
+  const {t} = useTranslation('sidebar');
 
   const handleClearConversations = () => {
     onClearConversations();
@@ -21,7 +21,7 @@ export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
 
   return isConfirming ? (
     <div className="flex w-full cursor-pointer items-center rounded-lg py-3 px-3 hover:bg-gray-500/10">
-      <IconTrash size={18} />
+      <IconTrash size={18}/>
 
       <div className="ml-3 flex-1 text-left text-[12.5px] leading-3 text-white">
         {t('Are you sure?')}
@@ -50,7 +50,7 @@ export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
   ) : (
     <SidebarButton
       text={t('Clear conversations')}
-      icon={<IconTrash size={18} />}
+      icon={<IconTrash size={18}/>}
       onClick={() => setIsConfirming(true)}
     />
   );

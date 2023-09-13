@@ -7,14 +7,14 @@ import {Inter} from 'next/font/google';
 
 import '@/styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({subsets: ['latin']});
 
-function App({ Component, pageProps }: AppProps<{}>) {
+function App({Component, pageProps}: AppProps<{}>) {
   const queryClient = new QueryClient();
 
   return (
     <div className={inter.className}>
-      <Toaster />
+      <Toaster/>
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
       </QueryClientProvider>

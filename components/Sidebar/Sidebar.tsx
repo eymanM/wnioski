@@ -19,7 +19,7 @@ interface Props<T> {
   handleDrop: (e: any) => void;
 }
 
-const Sidebar = <T,>({
+const Sidebar = <T, >({
   isOpen,
   addItemButtonTitle,
   visibleButton = true,
@@ -33,7 +33,7 @@ const Sidebar = <T,>({
   handleCreateItem,
   handleDrop,
 }: Props<T>) => {
-  const { t } = useTranslation('promptbar');
+  const {t} = useTranslation('promptbar');
 
   const allowDrop = (e: any) => {
     e.preventDefault();
@@ -60,31 +60,31 @@ const Sidebar = <T,>({
               handleSearchTerm('');
             }}
           >
-            <IconPlus size={16} />
+            <IconPlus size={16}/>
             {addItemButtonTitle}
           </button>
         </div> : null}
 
         <div className="flex-grow overflow-auto">
 
-            <div
-              className="pt-2"
-              onDrop={handleDrop}
-              onDragOver={allowDrop}
-              onDragEnter={highlightDrop}
-              onDragLeave={removeHighlight}
-            >
-              {itemComponent}
-            </div>
+          <div
+            className="pt-2"
+            onDrop={handleDrop}
+            onDragOver={allowDrop}
+            onDragEnter={highlightDrop}
+            onDragLeave={removeHighlight}
+          >
+            {itemComponent}
+          </div>
 
         </div>
         {footerComponent}
       </div>
 
-      <CloseSidebarButton onClick={toggleOpen} side={side} />
+      <CloseSidebarButton onClick={toggleOpen} side={side}/>
     </div>
   ) : (
-    <OpenSidebarButton onClick={toggleOpen} side={side} />
+    <OpenSidebarButton onClick={toggleOpen} side={side}/>
   );
 };
 

@@ -8,8 +8,9 @@ interface Props {
   searchTerm: string;
   onSearch: (searchTerm: string) => void;
 }
-const Search: FC<Props> = ({ placeholder, searchTerm, onSearch }) => {
-  const { t } = useTranslation('sidebar');
+
+const Search: FC<Props> = ({placeholder, searchTerm, onSearch}) => {
+  const {t} = useTranslation('sidebar');
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);

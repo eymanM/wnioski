@@ -5,7 +5,7 @@ interface Props {
   side: 'left' | 'right';
 }
 
-export const CloseSidebarButton = ({ onClick, side }: Props) => {
+export const CloseSidebarButton = ({onClick, side}: Props) => {
   return (
     <>
       <button
@@ -16,7 +16,7 @@ export const CloseSidebarButton = ({ onClick, side }: Props) => {
         } sm:h-8 sm:w-8 sm:text-neutral-700`}
         onClick={onClick}
       >
-        {side === 'right' ? <IconArrowBarRight /> : <IconArrowBarLeft />}
+        {side === 'right' ? <IconArrowBarRight/> : <IconArrowBarLeft/>}
       </button>
       <div
         onClick={onClick}
@@ -26,7 +26,7 @@ export const CloseSidebarButton = ({ onClick, side }: Props) => {
   );
 };
 
-export const OpenSidebarButton = ({ onClick, side }: Props) => {
+export const OpenSidebarButton = ({onClick, side}: Props) => {
   return (
     <button
       className={`fixed top-2.5 ${
@@ -36,7 +36,7 @@ export const OpenSidebarButton = ({ onClick, side }: Props) => {
       } sm:h-8 sm:w-8 sm:text-neutral-700`}
       onClick={onClick}
     >
-      {side === 'right' ? <IconArrowBarLeft /> : <IconArrowBarRight />}
+      {side === 'right' ? <IconArrowBarLeft/> : <IconArrowBarRight/>}
     </button>
   );
 };

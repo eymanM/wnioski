@@ -7,13 +7,13 @@ interface Props {
   projectId: string;
 }
 
-export const Conversations = ({ conversations, projectId }: Props) => {
+export const Conversations = ({conversations, projectId}: Props) => {
   return (
     <div className="flex w-full flex-col gap-1">
       {conversations
         .slice()
         .map((conversation, index) => (
-          <ConversationComponent key={index} conversation={conversation} projectId={projectId} />
+          <ConversationComponent key={index} conversation={conversation} projectId={projectId}/>
         ))}
     </div>
   );

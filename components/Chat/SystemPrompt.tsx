@@ -21,7 +21,7 @@ export const SystemPrompt: FC<Props> = ({
   prompts,
   onChangePrompt,
 }) => {
-  const { t } = useTranslation('chat');
+  const {t} = useTranslation('chat');
 
   const [value, setValue] = useState<string>('');
   const [activePromptIndex, setActivePromptIndex] = useState(0);
@@ -45,7 +45,7 @@ export const SystemPrompt: FC<Props> = ({
       alert(
         t(
           `Prompt limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
-          { maxLength, valueLength: value.length },
+          {maxLength, valueLength: value.length},
         ),
       );
       return;

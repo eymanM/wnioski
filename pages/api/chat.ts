@@ -16,7 +16,7 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   try {
-    const {  messages, key, prompt } = (await req.json()) as ChatBody;
+    const {messages, key, prompt} = (await req.json()) as ChatBody;
 
     await init((imports) => WebAssembly.instantiate(wasm, imports));
     const encoding = new Tiktoken(
@@ -56,9 +56,9 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error) {
     console.error(error);
     if (error instanceof OpenAIError) {
-      return new Response('Error', { status: 500, statusText: error.message });
+      return new Response('Error', {status: 500, statusText: error.message});
     } else {
-      return new Response('Error', { status: 500 });
+      return new Response('Error', {status: 500});
     }
   }
 };

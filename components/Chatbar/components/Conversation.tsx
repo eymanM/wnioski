@@ -14,10 +14,10 @@ interface Props {
 }
 
 export const ConversationComponent = ({conversation, projectId}: Props) => {
-   const { t: tCommon } = useTranslation('common');
-  const { t: tSidebar } = useTranslation('sidebar');
+  const {t: tCommon} = useTranslation('common');
+  const {t: tSidebar} = useTranslation('sidebar');
   const {
-    state: { selectedConversation, messageIsStreaming },
+    state: {selectedConversation, messageIsStreaming},
     handleSelectConversation,
     handleUpdateConversation,
     dispatch: homeDispatch,

@@ -85,7 +85,7 @@ export const handleUpdateConversationInProject = async (projectId: string, conve
   saveProject(updatedStorage);
   const conversations = projsStorage.find((p: Project) => p.id === projectId).conversations;
 
-    return {
+  return {
     single: conversation,
     all: conversations,
   };

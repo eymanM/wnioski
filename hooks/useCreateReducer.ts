@@ -11,13 +11,13 @@ export type ActionType<T> =
   | { type?: 'change'; field: FieldNames<T>; value: any };
 
 // Returns a typed dispatch and state
-export const useCreateReducer = <T>({ initialState }: { initialState: T }) => {
+export const useCreateReducer = <T>({initialState}: { initialState: T }) => {
   type Action =
     | { type: 'reset' }
     | { type?: 'change'; field: FieldNames<T>; value: any };
 
   const reducer = (state: T, action: Action) => {
-    if (!action.type) return { ...state, [action.field]: action.value };
+    if (!action.type) return {...state, [action.field]: action.value};
 
     if (action.type === 'reset') return initialState;
 
@@ -26,5 +26,5 @@ export const useCreateReducer = <T>({ initialState }: { initialState: T }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return useMemo(() => ({ state, dispatch }), [state, dispatch]);
+  return useMemo(() => ({state, dispatch}), [state, dispatch]);
 };

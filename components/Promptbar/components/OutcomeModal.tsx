@@ -10,8 +10,8 @@ interface Props {
 }
 
 export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcome}) => {
-   const { t: tCommon } = useTranslation('common');
-  const { t: tSidebar } = useTranslation('sidebar');
+  const {t: tCommon} = useTranslation('common');
+  const {t: tSidebar} = useTranslation('sidebar');
   const [outcomeState, setOutcomeState] = useState(outcome);
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);

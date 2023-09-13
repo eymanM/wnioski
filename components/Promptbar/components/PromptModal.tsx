@@ -10,10 +10,10 @@ interface Props {
   onUpdatePrompt: (prompt: Snippet) => void;
 }
 
-export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
-  const { t } = useTranslation('promptbar');
-   const { t: tCommon } = useTranslation('common');
-  const { t: tSidebar } = useTranslation('sidebar');
+export const PromptModal: FC<Props> = ({prompt, onClose, onUpdatePrompt}) => {
+  const {t} = useTranslation('promptbar');
+  const {t: tCommon} = useTranslation('common');
+  const {t: tSidebar} = useTranslation('sidebar');
   const [name, setName] = useState(prompt.name);
   const [description, setDescription] = useState(prompt.description);
   const [content, setContent] = useState(prompt.content);
@@ -23,7 +23,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
 
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      onUpdatePrompt({ ...prompt, name, description, content: content.trim() });
+      onUpdatePrompt({...prompt, name, description, content: content.trim()});
       onClose();
     }
   };
@@ -84,7 +84,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
-              style={{ resize: 'none' }}
+              style={{resize: 'none'}}
               placeholder={tSidebar('Description for this context information')!}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -96,7 +96,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
-              style={{ resize: 'none' }}
+              style={{resize: 'none'}}
               placeholder={tSidebar('Your snippet..')!}
               value={content}
               onChange={(e) => setContent(e.target.value)}

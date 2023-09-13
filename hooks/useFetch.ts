@@ -18,19 +18,19 @@ export const useFetch = () => {
 
     const requestBody = request?.body
       ? request.body instanceof FormData
-        ? { ...request, body: request.body }
-        : { ...request, body: JSON.stringify(request.body) }
+        ? {...request, body: request.body}
+        : {...request, body: JSON.stringify(request.body)}
       : request;
 
     const headers = {
       ...(request?.headers
         ? request.headers
         : request?.body && request.body instanceof FormData
-        ? {}
-        : { 'Content-type': 'application/json' }),
+          ? {}
+          : {'Content-type': 'application/json'}),
     };
 
-    return fetch(requestUrl, { ...requestBody, headers, signal })
+    return fetch(requestUrl, {...requestBody, headers, signal})
       .then((response) => {
         if (!response.ok) throw response;
 
@@ -45,8 +45,8 @@ export const useFetch = () => {
             contentType?.indexOf('text/plain') !== -1)
             ? response.json()
             : contentDisposition?.indexOf('attachment') !== -1
-            ? response.blob()
-            : response;
+              ? response.blob()
+              : response;
 
         return result;
       })
@@ -64,25 +64,25 @@ export const useFetch = () => {
 
   return {
     get: async <T>(url: string, request?: RequestModel): Promise<T> => {
-      return handleFetch(url, { ...request, method: 'get' });
+      return handleFetch(url, {...request, method: 'get'});
     },
     post: async <T>(
       url: string,
       request?: RequestWithBodyModel,
     ): Promise<T> => {
-      return handleFetch(url, { ...request, method: 'post' });
+      return handleFetch(url, {...request, method: 'post'});
     },
     put: async <T>(url: string, request?: RequestWithBodyModel): Promise<T> => {
-      return handleFetch(url, { ...request, method: 'put' });
+      return handleFetch(url, {...request, method: 'put'});
     },
     patch: async <T>(
       url: string,
       request?: RequestWithBodyModel,
     ): Promise<T> => {
-      return handleFetch(url, { ...request, method: 'patch' });
+      return handleFetch(url, {...request, method: 'patch'});
     },
     delete: async <T>(url: string, request?: RequestModel): Promise<T> => {
-      return handleFetch(url, { ...request, method: 'delete' });
+      return handleFetch(url, {...request, method: 'delete'});
     },
   };
 };

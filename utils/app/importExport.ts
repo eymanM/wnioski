@@ -54,7 +54,7 @@ export function cleanData(data: SupportedExportFormats): LatestExportFormat {
   }
 
   if (isExportFormatV3(data)) {
-    return { ...data, version: 4, prompts: [] };
+    return {...data, version: 4, prompts: []};
   }
 
   if (isExportFormatV4(data)) {
@@ -112,7 +112,7 @@ export const exportData = () => {
 export const importData = (
   data: SupportedExportFormats,
 ): LatestExportFormat => {
-  const { history, folders, prompts } = cleanData(data);
+  const {history, folders, prompts} = cleanData(data);
 
   const oldConversations = localStorage.getItem('conversationHistory');
   const oldConversationsParsed = oldConversations

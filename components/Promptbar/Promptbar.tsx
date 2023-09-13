@@ -16,26 +16,26 @@ import {initialState, PromptbarInitialState} from './Promptbar.state';
 import {v4 as uuidv4} from 'uuid';
 
 const Promptbar = () => {
-  const { t } = useTranslation('promptbar');
-   const { t: tCommon } = useTranslation('common');
-  const { t: tSidebar } = useTranslation('sidebar');
+  const {t} = useTranslation('promptbar');
+  const {t: tCommon} = useTranslation('common');
+  const {t: tSidebar} = useTranslation('sidebar');
 
   const promptBarContextValue = useCreateReducer<PromptbarInitialState>({
     initialState,
   });
 
   const {
-    state: { prompts, defaultModelId, showPromptbar },
+    state: {prompts, defaultModelId, showPromptbar},
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
   const {
-    state: { searchTerm, filteredPrompts },
+    state: {searchTerm, filteredPrompts},
     dispatch: promptDispatch,
   } = promptBarContextValue;
 
   const handleTogglePromptbar = () => {
-    homeDispatch({ field: 'showPromptbar', value: !showPromptbar });
+    homeDispatch({field: 'showPromptbar', value: !showPromptbar});
     localStorage.setItem('showPromptbar', JSON.stringify(!showPromptbar));
   };
 
@@ -51,8 +51,7 @@ const Promptbar = () => {
       const updatedPrompts = [...prompts, newSnippet];
 
 
-
-      homeDispatch({ field: 'prompts', value: updatedPrompts });
+      homeDispatch({field: 'prompts', value: updatedPrompts});
 
       savePrompts(updatedPrompts);
     }
@@ -61,7 +60,7 @@ const Promptbar = () => {
   const handleDeletePrompt = (prompt: Snippet) => {
     const updatedPrompts = prompts.filter((p) => p.id !== prompt.id);
 
-    homeDispatch({ field: 'prompts', value: updatedPrompts });
+    homeDispatch({field: 'prompts', value: updatedPrompts});
     savePrompts(updatedPrompts);
   };
 
@@ -73,7 +72,7 @@ const Promptbar = () => {
 
       return p;
     });
-    homeDispatch({ field: 'prompts', value: updatedPrompts });
+    homeDispatch({field: 'prompts', value: updatedPrompts});
 
     savePrompts(updatedPrompts);
   };
@@ -108,7 +107,7 @@ const Promptbar = () => {
         }),
       });
     } else {
-      promptDispatch({ field: 'filteredPrompts', value: prompts });
+      promptDispatch({field: 'filteredPrompts', value: prompts});
     }
   }, [searchTerm, prompts]);
 
@@ -133,7 +132,7 @@ const Promptbar = () => {
         items={filteredPrompts}
         searchTerm={searchTerm}
         handleSearchTerm={(searchTerm: string) =>
-          promptDispatch({ field: 'searchTerm', value: searchTerm })
+          promptDispatch({field: 'searchTerm', value: searchTerm})
         }
         toggleOpen={handleTogglePromptbar}
         handleCreateItem={handleCreatePrompt}

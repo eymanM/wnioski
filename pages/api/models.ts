@@ -8,7 +8,7 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   try {
-    const { key } = (await req.json()) as {
+    const {key} = (await req.json()) as {
       key: string;
     };
 
@@ -62,10 +62,10 @@ const handler = async (req: Request): Promise<Response> => {
       })
       .filter(Boolean);
 
-    return new Response(JSON.stringify(models), { status: 200 });
+    return new Response(JSON.stringify(models), {status: 200});
   } catch (error) {
     console.error(error);
-    return new Response('Error', { status: 500 });
+    return new Response('Error', {status: 500});
   }
 };
 

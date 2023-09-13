@@ -11,8 +11,8 @@ interface Props {
   onImport: (data: SupportedExportFormats) => void;
 }
 
-export const Import: FC<Props> = ({ onImport }) => {
-  const { t } = useTranslation('sidebar');
+export const Import: FC<Props> = ({onImport}) => {
+  const {t} = useTranslation('sidebar');
   return (
     <>
       <input
@@ -36,7 +36,7 @@ export const Import: FC<Props> = ({ onImport }) => {
 
       <SidebarButton
         text={t('Import data')}
-        icon={<IconFileImport size={18} />}
+        icon={<IconFileImport size={18}/>}
         onClick={() => {
           const importFile = document.querySelector(
             '#import-file',

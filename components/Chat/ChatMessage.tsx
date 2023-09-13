@@ -23,11 +23,11 @@ export interface Props {
   onEdit?: (editedMessage: Message) => void
 }
 
-export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) => {
-  const { t } = useTranslation('chat');
+export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => {
+  const {t} = useTranslation('chat');
 
   const {
-    state: { selectedConversation, conversations, currentMessage, messageIsStreaming, selectedProjectId },
+    state: {selectedConversation, conversations, currentMessage, messageIsStreaming, selectedProjectId},
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -52,7 +52,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
     }
   };
 
-   const handleUpdate = async (conversation: Conversation) => {
+  const handleUpdate = async (conversation: Conversation) => {
     //const selectedProjId = localStorage.getItem('selectedProjectId')!
     await handleUpdateConversationInProject(selectedProjectId!, conversation)
     const projs = await getProjects();
@@ -63,7 +63,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
   const handleEditMessage = () => {
     if (message.content != messageContent) {
       if (selectedConversation && onEdit) {
-        onEdit({ ...message, content: messageContent });
+        onEdit({...message, content: messageContent});
       }
     }
     setIsEditing(false);
@@ -96,14 +96,15 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
           ? 'border-b border-black/10 bg-gray-50 text-gray-800 dark:border-gray-900/50 dark:bg-[#444654] dark:text-gray-100'
           : 'border-b border-black/10 bg-white text-gray-800 dark:border-gray-900/50 dark:bg-[#343541] dark:text-gray-100'
       }`}
-      style={{ overflowWrap: 'anywhere' }}
+      style={{overflowWrap: 'anywhere'}}
     >
-      <div className="relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
+      <div
+        className="relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
         <div className="min-w-[40px] text-right font-bold">
           {message.role === 'assistant' ? (
-            <IconRobot size={30} />
+            <IconRobot size={30}/>
           ) : (
-            <IconUser size={30} />
+            <IconUser size={30}/>
           )}
         </div>
 
@@ -162,7 +163,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeMathjax]}
                 components={{
-                  code({ node, inline, className, children, ...props }) {
+                  code({node, inline, className, children, ...props}) {
                     if (children.length) {
                       if (children[0] == '▍') {
                         return <span className="animate-pulse cursor-default mt-1">▍</span>
@@ -186,21 +187,22 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                       </code>
                     );
                   },
-                  table({ children }) {
+                  table({children}) {
                     return (
                       <table className="border-collapse border border-black px-3 py-1 dark:border-white">
                         {children}
                       </table>
                     );
                   },
-                  th({ children }) {
+                  th({children}) {
                     return (
-                      <th className="break-words border border-black bg-gray-500 px-3 py-1 text-white dark:border-white">
+                      <th
+                        className="break-words border border-black bg-gray-500 px-3 py-1 text-white dark:border-white">
                         {children}
                       </th>
                     );
                   },
-                  td({ children }) {
+                  td({children}) {
                     return (
                       <td className="break-words border border-black px-3 py-1 dark:border-white">
                         {children}
@@ -214,15 +216,17 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                 }`}
               </MemoizedReactMarkdown>
 
-              {selectedConversation?.outcome ? null : <div className="md:-mr-8 ml-1 md:ml-0 flex flex-col md:flex-row gap-4 md:gap-1 items-center md:items-start justify-end md:justify-start">
+              {selectedConversation?.outcome ? null : <div
+                className="md:-mr-8 ml-1 md:ml-0 flex flex-col md:flex-row gap-4 md:gap-1 items-center md:items-start justify-end md:justify-start">
                 {(
                   <button
                     className="invisible group-hover:visible focus:visible text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                     onClick={() => {
                       setOutcomeState(message.content);
-                      setShowModal(true)}}
+                      setShowModal(true)
+                    }}
                   >
-                    <IconAdjustmentsFilled size={20} />
+                    <IconAdjustmentsFilled size={20}/>
                   </button>
                 )}
               </div>}

@@ -12,8 +12,8 @@ interface Props {
   value: string;
 }
 
-export const CodeBlock: FC<Props> = memo(({ language, value }) => {
-  const { t } = useTranslation('markdown');
+export const CodeBlock: FC<Props> = memo(({language, value}) => {
+  const {t} = useTranslation('markdown');
   const [isCopied, setIsCopied] = useState<Boolean>(false);
 
   const copyToClipboard = () => {
@@ -45,7 +45,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
       return;
     }
 
-    const blob = new Blob([value], { type: 'text/plain' });
+    const blob = new Blob([value], {type: 'text/plain'});
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.download = fileName;
@@ -66,14 +66,14 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
             className="flex gap-1.5 items-center rounded bg-none p-1 text-xs text-white"
             onClick={copyToClipboard}
           >
-            {isCopied ? <IconCheck size={18} /> : <IconClipboard size={18} />}
+            {isCopied ? <IconCheck size={18}/> : <IconClipboard size={18}/>}
             {isCopied ? t('Copied!') : t('Copy code')}
           </button>
           <button
             className="flex items-center rounded bg-none p-1 text-xs text-white"
             onClick={downloadAsFile}
           >
-            <IconDownload size={18} />
+            <IconDownload size={18}/>
           </button>
         </div>
       </div>
@@ -81,7 +81,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
       <SyntaxHighlighter
         language={language}
         style={oneDark}
-        customStyle={{ margin: 0 }}
+        customStyle={{margin: 0}}
       >
         {value}
       </SyntaxHighlighter>

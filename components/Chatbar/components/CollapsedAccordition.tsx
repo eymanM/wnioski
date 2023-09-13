@@ -12,8 +12,8 @@ interface Props {
 }
 
 export const CollapsedAccordition = ({projects, handleCreateProject, handleCreateConversation}: Props) => {
-  const { t: tCommon } = useTranslation('common');
-  const { t: tSidebar } = useTranslation('sidebar');
+  const {t: tCommon} = useTranslation('common');
+  const {t: tSidebar} = useTranslation('sidebar');
   const [isAccordionOpen, setAccordionOpen] = useState(false);
 
   const {
@@ -70,8 +70,8 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
 
             {isAccordionOpen && (
               <div className='ml-5'>
-              <Conversations conversations={project.conversations} projectId={project.id}/>
-                </div>
+                <Conversations conversations={project.conversations} projectId={project.id}/>
+              </div>
             )}
           </div>
         ))}

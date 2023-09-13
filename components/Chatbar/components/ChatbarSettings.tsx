@@ -10,7 +10,7 @@ import {SidebarButton} from '../../Sidebar/SidebarButton';
 
 
 export const ChatbarSettings = () => {
-  const { t } = useTranslation('sidebar');
+  const {t} = useTranslation('sidebar');
   const [isSettingDialogOpen, setIsSettingDialog] = useState<boolean>(false);
 
   const {
@@ -27,7 +27,7 @@ export const ChatbarSettings = () => {
     <div className="flex flex-col items-center space-y-1 border-t border-white/20 pt-1 text-sm">
       <SidebarButton
         text={t('Settings')}
-        icon={<IconSettings size={18} />}
+        icon={<IconSettings size={18}/>}
         onClick={() => setIsSettingDialog(true)}
       />
 

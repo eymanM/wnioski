@@ -11,8 +11,8 @@ interface Props {
 }
 
 export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
-   const { t: tCommon } = useTranslation('common');
-  const { t: tSidebar } = useTranslation('sidebar');
+  const {t: tCommon} = useTranslation('common');
+  const {t: tSidebar} = useTranslation('sidebar');
   const [name, setName] = useState(conversation.name);
   const [outcome, setOutcome] = useState(conversation.outcome);
   //const [snippets, setSnippets] = useState(conversation.snippets);

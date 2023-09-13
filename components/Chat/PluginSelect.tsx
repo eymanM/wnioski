@@ -15,7 +15,7 @@ export const PluginSelect: FC<Props> = ({
   onPluginChange,
   onKeyDown,
 }) => {
-  const { t } = useTranslation('chat');
+  const {t} = useTranslation('chat');
 
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -62,7 +62,8 @@ export const PluginSelect: FC<Props> = ({
 
   return (
     <div className="flex flex-col">
-      <div className="mb-1 w-full rounded border border-neutral-200 bg-transparent pr-2 text-neutral-900 dark:border-neutral-600 dark:text-white">
+      <div
+        className="mb-1 w-full rounded border border-neutral-200 bg-transparent pr-2 text-neutral-900 dark:border-neutral-600 dark:text-white">
         <select
           ref={selectRef}
           className="w-full cursor-pointer bg-transparent p-2"

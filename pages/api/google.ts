@@ -12,7 +12,7 @@ import jsdom, {JSDOM} from 'jsdom';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   try {
-    const { messages, key, googleAPIKey, googleCSEId } =
+    const {messages, key, googleAPIKey, googleCSEId} =
       req.body as GoogleBody;
 
     const userMessage = messages[messages.length - 1];
@@ -59,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
             }
           });
 
-          const dom = new JSDOM(html, { virtualConsole });
+          const dom = new JSDOM(html, {virtualConsole});
           const doc = dom.window.document;
           const parsed = new Readability(doc).parse();
 
@@ -110,7 +110,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
     Response:
     `;
 
-    const answerMessage: Message = { role: 'user', content: answerPrompt };
+    const answerMessage: Message = {role: 'user', content: answerPrompt};
 
     const answerRes = await fetch(`${OPENAI_API_HOST}/v1/chat/completions`, {
       headers: {
@@ -136,13 +136,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
       }),
     });
 
-    const { choices: choices2 } = await answerRes.json();
+    const {choices: choices2} = await answerRes.json();
     const answer = choices2[0].message.content;
 
-    res.status(200).json({ answer });
+    res.status(200).json({answer});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error'})
+    res.status(500).json({error: 'Error'})
   }
 };
 

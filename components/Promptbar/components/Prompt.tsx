@@ -10,7 +10,7 @@ interface Props {
   prompt: Snippet;
 }
 
-export const PromptComponent = ({ prompt }: Props) => {
+export const PromptComponent = ({prompt}: Props) => {
   const {
     dispatch: promptDispatch,
     handleUpdatePrompt,
@@ -30,7 +30,7 @@ export const PromptComponent = ({ prompt }: Props) => {
 
     if (isDeleting) {
       handleDeletePrompt(prompt);
-      promptDispatch({ field: 'searchTerm', value: '' });
+      promptDispatch({field: 'searchTerm', value: ''});
     }
 
     setIsDeleting(false);
@@ -71,9 +71,10 @@ export const PromptComponent = ({ prompt }: Props) => {
         }}
         onDragStart={(e) => handleDragStart(e, prompt)}
       >
-        <IconTextCaption size={18} />
+        <IconTextCaption size={18}/>
 
-        <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all pr-4 text-left text-[12.5px] leading-3">
+        <div
+          className="relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all pr-4 text-left text-[12.5px] leading-3">
           {prompt.name}
         </div>
       </button>

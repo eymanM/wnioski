@@ -15,14 +15,14 @@ interface Props {
   onClose: () => void;
 }
 
-export const SettingDialog: FC<Props> = ({ open, onClose }) => {
-  const { t } = useTranslation('common');
-  const { t: tSettings } = useTranslation('settings');
+export const SettingDialog: FC<Props> = ({open, onClose}) => {
+  const {t} = useTranslation('common');
+  const {t: tSettings} = useTranslation('settings');
   const settings: Settings = getSettings();
-  const { state, dispatch } = useCreateReducer<Settings>({
+  const {state, dispatch} = useCreateReducer<Settings>({
     initialState: settings,
   });
-  const { dispatch: homeDispatch } = useContext(HomeContext);
+  const {dispatch: homeDispatch} = useContext(HomeContext);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
   }, [onClose]);
 
   const handleSave = () => {
-    homeDispatch({ field: 'lightMode', value: state.theme });
+    homeDispatch({field: 'lightMode', value: state.theme});
     saveSettings(state);
   };
 
@@ -81,7 +81,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
               className="w-full cursor-pointer bg-transparent p-2 text-neutral-700 dark:text-neutral-200"
               value={state.theme}
               onChange={(event) =>
-                dispatch({ field: 'theme', value: event.target.value })
+                dispatch({field: 'theme', value: event.target.value})
               }
             >
               <option value="dark">{tSettings('Dark mode')}</option>

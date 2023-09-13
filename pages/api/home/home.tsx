@@ -46,9 +46,9 @@ const Home = ({
   serverSidePluginKeysSet,
   defaultModelId,
 }: Props) => {
-  const { t } = useTranslation('sidebar');
-  const { getModels } = useApiService();
-  const { getModelsError } = useErrorService();
+  const {t} = useTranslation('sidebar');
+  const {getModels} = useApiService();
+  const {getModelsError} = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
   const contextValue = useCreateReducer<HomeInitialState>({
@@ -71,9 +71,9 @@ const Home = ({
 
   const stopConversationRef = useRef<boolean>(false);
 
-  const { data, error, refetch } = useQuery(
+  const {data, error, refetch} = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
-    ({ signal }) => {
+    ({signal}) => {
       if (!apiKey && !serverSideApiKeyIsSet) return null;
 
       return getModels(
@@ -83,15 +83,15 @@ const Home = ({
         signal,
       );
     },
-    { enabled: true, refetchOnMount: false },
+    {enabled: true, refetchOnMount: false},
   );
 
   useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
+    if (data) dispatch({field: 'models', value: data});
   }, [data, dispatch]);
 
   useEffect(() => {
-    dispatch({ field: 'modelError', value: getModelsError(error) });
+    dispatch({field: 'modelError', value: getModelsError(error)});
   }, [dispatch, error, getModelsError]);
 
   // FETCH MODELS ----------------------------------------------
@@ -135,15 +135,15 @@ const Home = ({
 
     project.conversations = updatedConversations
 
-    dispatch({ field: 'selectedConversation', value: newConversation });
+    dispatch({field: 'selectedConversation', value: newConversation});
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({field: 'conversations', value: updatedConversations});
     saveConversation(newConversation);
 
     await handleUpdateProject(project);
     const updatedProjects = projects.map((p) => p.id === projectId ? project : p);
     dispatch({field: 'projects', value: updatedProjects});
-    dispatch({ field: 'loading', value: false });
+    dispatch({field: 'loading', value: false});
   };
 
   const handleUpdateConversation = async (
@@ -160,30 +160,30 @@ const Home = ({
       updatedConversation,
     );
 
-    dispatch({ field: 'selectedConversation', value: single });
+    dispatch({field: 'selectedConversation', value: single});
   };
 
   // EFFECTS  --------------------------------------------
 
   useEffect(() => {
     if (window.innerWidth < 640) {
-      dispatch({ field: 'showChatbar', value: false });
+      dispatch({field: 'showChatbar', value: false});
     }
   }, [selectedConversation]);
 
   useEffect(() => {
     defaultModelId &&
-      dispatch({ field: 'defaultModelId', value: defaultModelId });
+    dispatch({field: 'defaultModelId', value: defaultModelId});
     serverSideApiKeyIsSet &&
-      dispatch({
-        field: 'serverSideApiKeyIsSet',
-        value: serverSideApiKeyIsSet,
-      });
+    dispatch({
+      field: 'serverSideApiKeyIsSet',
+      value: serverSideApiKeyIsSet,
+    });
     serverSidePluginKeysSet &&
-      dispatch({
-        field: 'serverSidePluginKeysSet',
-        value: serverSidePluginKeysSet,
-      });
+    dispatch({
+      field: 'serverSidePluginKeysSet',
+      value: serverSidePluginKeysSet,
+    });
   }, [defaultModelId, serverSideApiKeyIsSet, serverSidePluginKeysSet]);
 
   // ON LOAD --------------------------------------------
@@ -200,44 +200,44 @@ const Home = ({
     const apiKey = localStorage.getItem('apiKey');
 
     if (serverSideApiKeyIsSet) {
-      dispatch({ field: 'apiKey', value: '' });
+      dispatch({field: 'apiKey', value: ''});
 
       localStorage.removeItem('apiKey');
     } else if (apiKey) {
-      dispatch({ field: 'apiKey', value: apiKey });
+      dispatch({field: 'apiKey', value: apiKey});
     }
 
     const pluginKeys = localStorage.getItem('pluginKeys');
     if (serverSidePluginKeysSet) {
-      dispatch({ field: 'pluginKeys', value: [] });
+      dispatch({field: 'pluginKeys', value: []});
       localStorage.removeItem('pluginKeys');
     } else if (pluginKeys) {
-      dispatch({ field: 'pluginKeys', value: pluginKeys });
+      dispatch({field: 'pluginKeys', value: pluginKeys});
     }
 
     if (window.innerWidth < 640) {
-      dispatch({ field: 'showChatbar', value: false });
-      dispatch({ field: 'showPromptbar', value: false });
+      dispatch({field: 'showChatbar', value: false});
+      dispatch({field: 'showPromptbar', value: false});
     }
 
     const showChatbar = localStorage.getItem('showChatbar');
     if (showChatbar) {
-      dispatch({ field: 'showChatbar', value: showChatbar === 'true' });
+      dispatch({field: 'showChatbar', value: showChatbar === 'true'});
     }
 
     const showPromptbar = localStorage.getItem('showPromptbar');
     if (showPromptbar) {
-      dispatch({ field: 'showPromptbar', value: showPromptbar === 'true' });
+      dispatch({field: 'showPromptbar', value: showPromptbar === 'true'});
     }
 
     const folders = localStorage.getItem('folders');
     if (folders) {
-      dispatch({ field: 'folders', value: JSON.parse(folders) });
+      dispatch({field: 'folders', value: JSON.parse(folders)});
     }
 
     const prompts = localStorage.getItem('prompts');
     if (prompts) {
-      dispatch({ field: 'prompts', value: JSON.parse(prompts) });
+      dispatch({field: 'prompts', value: JSON.parse(prompts)});
     }
 
     const conversationHistory = localStorage.getItem('conversationHistory');
@@ -248,7 +248,7 @@ const Home = ({
         parsedConversationHistory,
       );
 
-      dispatch({ field: 'conversations', value: cleanedConversationHistory });
+      dispatch({field: 'conversations', value: cleanedConversationHistory});
     }
 
     const selectedConversation = localStorage.getItem('selectedConversation');
@@ -300,12 +300,12 @@ const Home = ({
     >
       <Head>
         <title>Chatbot UI</title>
-        <meta name="description" content="ChatGPT but better." />
+        <meta name="description" content="ChatGPT but better."/>
         <meta
           name="viewport"
           content="height=device-height ,width=device-width, initial-scale=1, user-scalable=no"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico"/>
       </Head>
       {selectedConversation && (
         <main
@@ -319,13 +319,13 @@ const Home = ({
           </div>
 
           <div className="flex h-full w-full pt-[48px] sm:pt-0">
-            <Chatbar />
+            <Chatbar/>
 
             <div className="flex flex-1">
-              <Chat stopConversationRef={stopConversationRef} />
+              <Chat stopConversationRef={stopConversationRef}/>
             </div>
 
-            <Promptbar />
+            <Promptbar/>
           </div>
         </main>
       )}
@@ -334,7 +334,7 @@ const Home = ({
 };
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({locale}) => {
   const defaultModelId =
     (process.env.DEFAULT_MODEL &&
       Object.values(OpenAIModelID).includes(

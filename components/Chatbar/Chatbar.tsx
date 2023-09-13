@@ -28,7 +28,7 @@ export interface Project {
 
 
 export const Chatbar = () => {
-  const { t } = useTranslation('sidebar');
+  const {t} = useTranslation('sidebar');
 
   const chatBarContextValue = useCreateReducer<ChatbarInitialState>({
     initialState,
@@ -44,7 +44,7 @@ export const Chatbar = () => {
   } = useContext(HomeContext);
 
   const {
-    state: { searchTerm, filteredConversations },
+    state: {searchTerm, filteredConversations},
     dispatch: chatDispatch,
   } = chatBarContextValue;
 
@@ -70,7 +70,7 @@ export const Chatbar = () => {
   }
 
   const handleToggleChatbar = () => {
-    homeDispatch({ field: 'showChatbar', value: !showChatbar });
+    homeDispatch({field: 'showChatbar', value: !showChatbar});
     localStorage.setItem('showChatbar', JSON.stringify(!showChatbar));
   };
 
@@ -110,12 +110,12 @@ export const Chatbar = () => {
         items={projects}
         searchTerm={searchTerm}
         handleSearchTerm={(searchTerm: string) =>
-          chatDispatch({ field: 'searchTerm', value: searchTerm })
+          chatDispatch({field: 'searchTerm', value: searchTerm})
         }
         toggleOpen={handleToggleChatbar}
         handleCreateItem={() => console.log('create project')}
         handleDrop={() => console.log('drop')}
-        footerComponent={<ChatbarSettings />}
+        footerComponent={<ChatbarSettings/>}
       />
     </ChatbarContext.Provider>
   );
