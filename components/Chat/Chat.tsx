@@ -37,6 +37,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       modelError,
       loading,
       prompts,
+      selectedProjectId
     },
     handleUpdateConversation,
     dispatch: homeDispatch,
@@ -163,6 +164,30 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 ...updatedConversation,
                 messages: updatedMessages,
               };
+              homeDispatch({
+                field: 'selectedConversation',
+                value: updatedConversation,
+              });
+
+              //const selectedProjectId = localStorage.getItem('selectedProjectId');
+              const proj = projects.find((proj) => proj.id === selectedProjectId!)!;
+              proj.conversations = proj.conversations?.map((conv) => {
+                if (conv.id === selectedConversation.id) {
+                  return updatedConversation;
+                }
+                return conv;
+              }) || [];
+
+              const updatedProjects = projects.map((proj) => {
+                if (proj.id === selectedProjectId) {
+                  return proj;
+                }
+                return proj;
+              });
+
+              homeDispatch({ field: 'projects', value: updatedProjects });
+                localStorage.setItem('projects', JSON.stringify(updatedProjects));
+
               homeDispatch({
                 field: 'selectedConversation',
                 value: updatedConversation,

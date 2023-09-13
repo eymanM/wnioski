@@ -18,6 +18,7 @@ export interface Conversation {
   id: string;
   name: string;
   messages: Message[];
+  includedOutcomesFromConversationIds: string[];
   prompt: string;
   outcome?: string;
   createdAt: string;

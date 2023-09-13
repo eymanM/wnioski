@@ -37,7 +37,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, conversations, currentMessage, messageIsStreaming },
+    state: { selectedConversation, conversations, currentMessage, messageIsStreaming, selectedProjectId },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -46,6 +46,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
   const [messageContent, setMessageContent] = useState(message.content);
   const [addedToContext, setAddedToContext] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [outcomeState, setOutcomeState] = useState(selectedConversation?.outcome ?? '');
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -62,8 +63,8 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
   };
 
    const handleUpdate = async (conversation: Conversation) => {
-    const selectedProjId = localStorage.getItem('selectedProjectId')!
-    await handleUpdateConversationInProject(selectedProjId, conversation)
+    //const selectedProjId = localStorage.getItem('selectedProjectId')!
+    await handleUpdateConversationInProject(selectedProjectId!, conversation)
     const projs = await getProjects();
 
     homeDispatch({field: 'projects', value: projs});
@@ -227,7 +228,9 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                 {(
                   <button
                     className="invisible group-hover:visible focus:visible text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                    onClick={() => setShowModal(true)}
+                    onClick={() => {
+                      setOutcomeState(message.content);
+                      setShowModal(true)}}
                   >
                     <IconAdjustmentsFilled size={20} />
                   </button>
@@ -242,6 +245,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
           conversation={JSON.parse(localStorage.getItem('selectedConversation')!)}
           onClose={() => setShowModal(false)}
           onUpdate={handleUpdate}
+          outcome={outcomeState}
         />
       )}
     </div>

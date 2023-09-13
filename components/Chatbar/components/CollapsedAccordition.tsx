@@ -1,8 +1,10 @@
 import {Conversations} from "@/components/Chatbar/components/Conversations";
 import {IconPlus} from "@tabler/icons-react";
 import {Project} from "@/components/Chatbar/Chatbar";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {ThreadModal} from "@/components/Promptbar/components/ThreadModal";
+import homeContext from "@/pages/api/home/home.context";
+import HomeContext from "@/pages/api/home/home.context";
 
 interface Props {
   projects: Project[];
@@ -12,8 +14,11 @@ interface Props {
 
 export const CollapsedAccordition = ({projects, handleCreateProject, handleCreateConversation}: Props) => {
   const [isAccordionOpen, setAccordionOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [isInnerAccordionOpen, setInnerAccordionOpen] = useState(false);
+
+  const {
+    dispatch: homeDispatch,
+  } = useContext(HomeContext);
+
   return (
     <div>
       <div className="flex items-center">
@@ -34,7 +39,10 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
               className='flex justify-between p-2 my-2 hover:bg-gray-900 rounded cursor-pointer'
               onClick={() => {
                 setAccordionOpen((prev) => {
-                  if (!prev) localStorage.setItem('selectedProjectId', project.id)
+                  if (!prev) {
+                    homeDispatch({field: 'selectedProjectId', value: project.id});
+                    localStorage.setItem('selectedProjectId', project.id)
+                  }
                   return !prev
                 });
 
@@ -45,6 +53,8 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
               </div>
               <button
                 onClick={async (e) => {
+                  homeDispatch({field: 'selectedProjectId', value: project.id});
+                  localStorage.setItem('selectedProjectId', project.id)
                   setAccordionOpen(true);
                   e.stopPropagation();
                   await handleCreateConversation(project.id);

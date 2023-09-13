@@ -7,10 +7,11 @@ interface Props {
   conversation: Conversation;
   onClose: () => void;
   onUpdate: (conversation: Conversation) => void;
+  outcome: string;
 }
 
-export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
-  const [outcome, setOutcome] = useState(conversation.outcome);
+export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcome}) => {
+  const [outcomeState, setOutcomeState] = useState(outcome);
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -65,12 +66,12 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
             <div className="text-sm font-bold text-black dark:text-neutral-200">
               Outcome
             </div>
-            <input
-              ref={nameInputRef}
+            <textarea
+              rows={5}
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               placeholder='Name of your AI conversation for this thread.'
-              value={outcome}
-              onChange={(e) => setOutcome(e.target.value)}
+              value={outcomeState}
+              onChange={(e) => setOutcomeState(e.target.value)}
             />
 
             <button
@@ -79,7 +80,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
               onClick={() => {
                 const updatedConversation: Conversation = {
                   ...conversation,
-                  outcome
+                  outcome: outcomeState,
                 };
 
                 onUpdate(updatedConversation);

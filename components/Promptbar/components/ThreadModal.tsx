@@ -17,6 +17,17 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   const [selectedSnippets, setSelectedSnippets] = useState<Snippet[]>(conversation.snippets);
+  const [selectedOutcomesIds, setSelectedOutcomesIds] = useState<string[]>(conversation.includedOutcomesFromConversationIds);
+
+  const toggleOutcome = (conversation: Conversation) => {
+    setSelectedOutcomesIds((prev) => {
+      if (prev.find((s) => s == conversation.id)) {
+        return prev.filter(s => s !== conversation.id)
+      } else {
+        return [...prev, conversation.id]
+      }
+    })
+  }
 
   const toggleSnippet = (snippet: Snippet) => {
     setSelectedSnippets((prev) => {
@@ -28,8 +39,9 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
     })
   }
 
+
   const {
-    state: {prompts},
+    state: {prompts, projects, selectedProjectId},
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -99,12 +111,34 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
               Outcome
             </div>
             <textarea
+              rows={5}
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{resize: 'none'}}
               placeholder='Result (outcome) of your AI conversation for this thread.'
               value={outcome}
               onChange={(e) => setOutcome(e.target.value)}
             />
+
+            <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
+              Outcomes from other threads
+            </div>
+
+            <div>
+              {projects.find(p => p.id == selectedProjectId)?.conversations.filter(c => c.outcome && c.id !== conversation.id).filter(Boolean)?.map((conv) => (
+                <div key={conv.id} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedOutcomesIds?.find(((s) => s === conv.id)) != null}
+                    onChange={() => toggleOutcome(conv)}
+                    className="cursor-pointer"
+                  />
+
+                  <div className="font-normal text-lg">
+                    {conv.name}
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
               Snippets
@@ -135,6 +169,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
                   ...conversation,
                   name,
                   snippets: selectedSnippets,
+                  includedOutcomesFromConversationIds: selectedOutcomesIds,
                   outcome
                 };
 

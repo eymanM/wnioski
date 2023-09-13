@@ -107,11 +107,11 @@ const Home = ({
 
   const handleSelectProj = (projectId: string, threadId: string) => {
     dispatch({
-      field: 'selectedProj',
+      field: 'selectedProjectId',
       value: {projectId},
     });
 
-    localStorage.setItem('selectedProj', projectId);
+    localStorage.setItem('selectedProjId', projectId);
   };
 
   const handleNewConversation = async (projectId: string) => {
@@ -122,6 +122,7 @@ const Home = ({
       id: uuidv4(),
       name: t('New Conversation'),
       messages: [],
+      includedOutcomesFromConversationIds: [],
       prompt: DEFAULT_SYSTEM_PROMPT,
       outcome: '',
       createdAt: new Date().toISOString(),

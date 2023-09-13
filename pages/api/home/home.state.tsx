@@ -16,7 +16,7 @@ export interface HomeInitialState {
   models: OpenAIModel[];
   folders: FolderInterface[];
   conversations: Conversation[];
-  selectedProj: string | undefined;
+  selectedProjectId: string | undefined;
   projects: Project[];
   selectedConversation: Conversation | undefined;
   currentMessage: Message | undefined;
@@ -42,7 +42,7 @@ export const initialState: HomeInitialState = {
   models: [],
   folders: [],
   conversations: [],
-  selectedProj: undefined,
+  selectedProjectId: undefined,
   projects: [],
   selectedConversation: undefined,
   currentMessage: undefined,

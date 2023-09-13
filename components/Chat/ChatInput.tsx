@@ -52,7 +52,7 @@ export const ChatInput = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const maxLength = 300;
+    const maxLength = 500;
 
     if (maxLength && value.length > maxLength) {
       alert(
@@ -107,18 +107,6 @@ export const ChatInput = ({
       e.preventDefault();
       handleSend();
     }
-  };
-
-  const parseVariables = (content: string) => {
-    const regex = /{{(.*?)}}/g;
-    const foundVariables = [];
-    let match;
-
-    while ((match = regex.exec(content)) !== null) {
-      foundVariables.push(match[1]);
-    }
-
-    return foundVariables;
   };
 
   const updatePromptListVisibility = useCallback((text: string) => {
