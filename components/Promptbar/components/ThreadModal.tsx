@@ -45,7 +45,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
 
   const {
     state: {prompts, projects, selectedProjectId},
-    dispatch: homeDispatch,
+
   } = useContext(HomeContext);
 
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -62,7 +62,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
       }
     };
 
-    const handleMouseUp = (e: MouseEvent) => {
+    const handleMouseUp = () => {
       window.removeEventListener('mouseup', handleMouseUp);
       onClose();
     };

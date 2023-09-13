@@ -1,6 +1,5 @@
 import {IconPlus} from '@tabler/icons-react';
 import {ReactNode} from 'react';
-import {useTranslation} from 'react-i18next';
 
 import {CloseSidebarButton, OpenSidebarButton,} from './components/OpenCloseButton';
 
@@ -24,16 +23,14 @@ const Sidebar = <T, >({
   addItemButtonTitle,
   visibleButton = true,
   side,
-  items,
   itemComponent,
   footerComponent,
-  searchTerm,
   handleSearchTerm,
   toggleOpen,
   handleCreateItem,
   handleDrop,
 }: Props<T>) => {
-  const {t} = useTranslation('promptbar');
+
 
   const allowDrop = (e: any) => {
     e.preventDefault();

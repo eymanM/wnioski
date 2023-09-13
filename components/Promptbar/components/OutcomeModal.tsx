@@ -30,7 +30,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
       }
     };
 
-    const handleMouseUp = (e: MouseEvent) => {
+    const handleMouseUp = () => {
       window.removeEventListener('mouseup', handleMouseUp);
       onClose();
     };

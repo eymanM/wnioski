@@ -32,7 +32,7 @@ export const SettingDialog: FC<Props> = ({open, onClose}) => {
       }
     };
 
-    const handleMouseUp = (e: MouseEvent) => {
+    const handleMouseUp = () => {
       window.removeEventListener('mouseup', handleMouseUp);
       onClose();
     };

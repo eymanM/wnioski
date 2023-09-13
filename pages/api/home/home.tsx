@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useQuery} from 'react-query';
 
 import {GetServerSideProps} from 'next';
@@ -49,7 +49,7 @@ const Home = ({
   const {t} = useTranslation('sidebar');
   const {getModels} = useApiService();
   const {getModelsError} = useErrorService();
-  const [initialRender, setInitialRender] = useState<boolean>(true);
+
 
   const contextValue = useCreateReducer<HomeInitialState>({
     initialState,
@@ -59,11 +59,7 @@ const Home = ({
     state: {
       apiKey,
       lightMode,
-      folders,
-      conversations,
       selectedConversation,
-      prompts,
-      temperature,
       projects,
     },
     dispatch,
@@ -71,7 +67,7 @@ const Home = ({
 
   const stopConversationRef = useRef<boolean>(false);
 
-  const {data, error, refetch} = useQuery(
+  const {data, error} = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
     ({signal}) => {
       if (!apiKey && !serverSideApiKeyIsSet) return null;
@@ -105,7 +101,7 @@ const Home = ({
     saveConversation(conversation);
   };
 
-  const handleSelectProj = (projectId: string, threadId: string) => {
+  const handleSelectProj = (projectId: string) => {
     dispatch({
       field: 'selectedProjectId',
       value: {projectId},
@@ -156,7 +152,7 @@ const Home = ({
       [data.key]: data.value,
     };
 
-    const {single, all} = await handleUpdateConversationInProject(projectId,
+    const {single} = await handleUpdateConversationInProject(projectId,
       updatedConversation,
     );
 
@@ -264,7 +260,7 @@ const Home = ({
         value: cleanedSelectedConversation,
       });
     } else {
-      const lastConversation = conversations[conversations.length - 1];
+
       dispatch({
         field: 'selectedConversation',
         value: {

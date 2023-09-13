@@ -5,7 +5,7 @@ const nextConfig = {
     i18n,
     reactStrictMode: true,
 
-    webpack(config, {isServer, dev}) {
+    webpack(config) {
         config.experiments = {
             asyncWebAssembly: true,
             layers: true,

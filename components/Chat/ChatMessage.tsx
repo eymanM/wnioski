@@ -27,22 +27,19 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
   const {t} = useTranslation('chat');
 
   const {
-    state: {selectedConversation, conversations, currentMessage, messageIsStreaming, selectedProjectId},
+    state: {selectedConversation, messageIsStreaming, selectedProjectId},
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messageContent, setMessageContent] = useState(message.content);
-  const [addedToContext, setAddedToContext] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [outcomeState, setOutcomeState] = useState(selectedConversation?.outcome ?? '');
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const toggleEditing = () => {
-    setIsEditing(!isEditing);
-  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessageContent(event.target.value);

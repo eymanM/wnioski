@@ -10,7 +10,7 @@ interface Props {
 
 export const Navbar: FC<Props> = ({
   selectedConversation,
-  onNewConversation,
+
 }) => {
   return (
     <nav className="flex w-full justify-between bg-[#202123] py-3 px-4">

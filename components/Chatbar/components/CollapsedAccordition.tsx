@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const CollapsedAccordition = ({projects, handleCreateProject, handleCreateConversation}: Props) => {
-  const {t: tCommon} = useTranslation('common');
+
   const {t: tSidebar} = useTranslation('sidebar');
   const [isAccordionOpen, setAccordionOpen] = useState(false);
 

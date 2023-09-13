@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     const models: OpenAIModel[] = json.data
       .map((model: any) => {
         const model_name = (OPENAI_API_TYPE === 'azure') ? model.model : model.id;
-        for (const [key, value] of Object.entries(OpenAIModelID)) {
+        for (const [, value] of Object.entries(OpenAIModelID)) {
           if (value === model_name) {
             return {
               id: model.id,

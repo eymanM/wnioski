@@ -36,15 +36,14 @@ export const Chatbar = () => {
 
 
   const {
-    state: {conversations, projects, showChatbar, defaultModelId, folders, pluginKeys},
+    state: {conversations, projects, showChatbar},
     dispatch: homeDispatch,
     handleNewConversation,
-    handleUpdateConversation,
     handleCreateProject,
   } = useContext(HomeContext);
 
   const {
-    state: {searchTerm, filteredConversations},
+    state: {searchTerm},
     dispatch: chatDispatch,
   } = chatBarContextValue;
 

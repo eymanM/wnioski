@@ -1,14 +1,6 @@
 import {Project} from "@/components/Chatbar/Chatbar";
 import {Conversation} from "@/types/chat";
 
-
-export const getProject = async (id: string) => {
-  const projsStorageObj = localStorage.getItem('projects');
-  const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
-
-  return projsStorage.find((p: Project) => p.id === id);
-}
-
 export const getProjects = async () => {
   const projsStorageObj = localStorage.getItem('projects');
   return projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
@@ -46,22 +38,7 @@ export const handleDeleteProject = async (projectId: string) => {
   saveProject(updatedStorage);
 }
 
-export const handleCreateConversationInProject = async (projectId: string, conversation: Conversation) => {
-  const projsStorageObj = localStorage.getItem('projects');
-  const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
 
-  const updatedStorage = projsStorage.map((p: Project) => {
-    if (p.id === projectId) {
-      return {
-        ...p,
-        conversations: [...p.conversations, conversation],
-      };
-    }
-    return p;
-  });
-
-  saveProject(updatedStorage);
-}
 
 export const handleUpdateConversationInProject = async (projectId: string, conversation: Conversation) => {
   const projsStorageObj = localStorage.getItem('projects');

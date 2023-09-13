@@ -1,5 +1,5 @@
 import {IconCheck, IconMessage, IconSettings2,} from '@tabler/icons-react';
-import {DragEvent, useContext, useState,} from 'react';
+import {useContext, useState,} from 'react';
 
 import {Conversation} from '@/types/chat';
 
@@ -15,28 +15,18 @@ interface Props {
 
 export const ConversationComponent = ({conversation, projectId}: Props) => {
   const {t: tCommon} = useTranslation('common');
-  const {t: tSidebar} = useTranslation('sidebar');
+
   const {
     state: {selectedConversation, messageIsStreaming},
     handleSelectConversation,
-    handleUpdateConversation,
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
   //const { handleDeleteConversation } = useContext(ChatbarContext);
 
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isRenaming, setIsRenaming] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
 
-  const handleDragStart = (
-    e: DragEvent<HTMLButtonElement>,
-    conversation: Conversation,
-  ) => {
-    if (e.dataTransfer) {
-      e.dataTransfer.setData('conversation', JSON.stringify(conversation));
-    }
-  };
 
   const handleUpdate = async (conversation: Conversation) => {
     //const selectedProjId = localStorage.getItem('selectedProjectId')
@@ -73,7 +63,7 @@ export const ConversationComponent = ({conversation, projectId}: Props) => {
                 <div className='flex items-center'>{conversation.name}</div>
               </div>
               <button
-                onClick={async (e) => {
+                onClick={async () => {
                   setShowModal(true);
                 }}
                 className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'

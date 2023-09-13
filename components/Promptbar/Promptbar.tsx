@@ -16,8 +16,8 @@ import {initialState, PromptbarInitialState} from './Promptbar.state';
 import {v4 as uuidv4} from 'uuid';
 
 const Promptbar = () => {
-  const {t} = useTranslation('promptbar');
-  const {t: tCommon} = useTranslation('common');
+
+
   const {t: tSidebar} = useTranslation('sidebar');
 
   const promptBarContextValue = useCreateReducer<PromptbarInitialState>({

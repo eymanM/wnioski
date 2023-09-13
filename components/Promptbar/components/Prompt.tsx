@@ -1,5 +1,5 @@
 import {IconTextCaption,} from '@tabler/icons-react';
-import {DragEvent, MouseEventHandler, useContext, useEffect, useState,} from 'react';
+import {DragEvent, useContext, useEffect, useState,} from 'react';
 
 import {Snippet} from '@/types/snippet';
 
@@ -12,9 +12,8 @@ interface Props {
 
 export const PromptComponent = ({prompt}: Props) => {
   const {
-    dispatch: promptDispatch,
     handleUpdatePrompt,
-    handleDeletePrompt,
+
   } = useContext(PromptbarContext);
 
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -25,26 +24,6 @@ export const PromptComponent = ({prompt}: Props) => {
     handleUpdatePrompt(prompt);
   };
 
-  const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation();
-
-    if (isDeleting) {
-      handleDeletePrompt(prompt);
-      promptDispatch({field: 'searchTerm', value: ''});
-    }
-
-    setIsDeleting(false);
-  };
-
-  const handleCancelDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation();
-    setIsDeleting(false);
-  };
-
-  const handleOpenDeleteModal: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation();
-    setIsDeleting(true);
-  };
 
   const handleDragStart = (e: DragEvent<HTMLButtonElement>, prompt: Snippet) => {
     if (e.dataTransfer) {

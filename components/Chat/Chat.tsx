@@ -34,19 +34,16 @@ export const Chat = memo(({stopConversationRef}: Props) => {
       apiKey,
       pluginKeys,
       serverSideApiKeyIsSet,
-      messageIsStreaming,
       modelError,
       loading,
-      prompts,
       selectedProjectId
     },
-    handleUpdateConversation,
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
   const [currentMessage, setCurrentMessage] = useState<Message>();
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
-  const [showSettings, setShowSettings] = useState<boolean>(false);
+
   const [showScrollDownButton, setShowScrollDownButton] =
     useState<boolean>(false);
 
@@ -221,7 +218,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
     ],
   );
 
-  const scrollToBottom = useCallback(() => {
+  useCallback(() => {
     if (autoScrollEnabled) {
       messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
       textareaRef.current?.focus();
@@ -251,9 +248,6 @@ export const Chat = memo(({stopConversationRef}: Props) => {
     });
   };
 
-  const handleSettings = () => {
-    setShowSettings(!showSettings);
-  };
 
   const scrollDown = () => {
     if (autoScrollEnabled) {
