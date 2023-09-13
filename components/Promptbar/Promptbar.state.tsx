@@ -1,4 +1,4 @@
-import { Snippet } from '@/types/snippet';
+import {Snippet} from '@/types/snippet';
 
 export interface PromptbarInitialState {
   searchTerm: string;

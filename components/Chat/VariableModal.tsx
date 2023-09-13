@@ -1,6 +1,6 @@
-import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import {FC, KeyboardEvent, useEffect, useRef, useState} from 'react';
 
-import { Snippet } from '@/types/snippet';
+import {Snippet} from '@/types/snippet';
 
 interface Props {
   prompt: Snippet;

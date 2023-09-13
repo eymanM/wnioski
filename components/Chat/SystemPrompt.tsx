@@ -1,21 +1,14 @@
-import {
-  FC,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import {FC, KeyboardEvent, useCallback, useEffect, useRef, useState,} from 'react';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
-import { DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
+import {DEFAULT_SYSTEM_PROMPT} from '@/utils/app/const';
 
-import { Conversation } from '@/types/chat';
-import { Snippet } from '@/types/snippet';
+import {Conversation} from '@/types/chat';
+import {Snippet} from '@/types/snippet';
 
-import { PromptList } from './PromptList';
-import { VariableModal } from './VariableModal';
+import {PromptList} from './PromptList';
+import {VariableModal} from './VariableModal';
 
 interface Props {
   conversation: Conversation;

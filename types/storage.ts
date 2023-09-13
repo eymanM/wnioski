@@ -1,7 +1,7 @@
-import { Conversation } from './chat';
-import { FolderInterface } from './folder';
-import { PluginKey } from './plugin';
-import { Snippet } from './snippet';
+import {Conversation} from './chat';
+import {FolderInterface} from './folder';
+import {PluginKey} from './plugin';
+import {Snippet} from './snippet';
 
 // keep track of local storage schema
 export interface LocalStorage {

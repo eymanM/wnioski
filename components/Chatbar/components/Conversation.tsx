@@ -1,4 +1,4 @@
-import {IconCheck, IconChecks, IconMessage, IconSettings2,} from '@tabler/icons-react';
+import {IconCheck, IconMessage, IconSettings2,} from '@tabler/icons-react';
 import {DragEvent, useContext, useState,} from 'react';
 
 import {Conversation} from '@/types/chat';

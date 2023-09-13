@@ -1,11 +1,11 @@
-import { IconFileImport } from '@tabler/icons-react';
-import { FC } from 'react';
+import {IconFileImport} from '@tabler/icons-react';
+import {FC} from 'react';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
-import { SupportedExportFormats } from '@/types/export';
+import {SupportedExportFormats} from '@/types/export';
 
-import { SidebarButton } from '../Sidebar/SidebarButton';
+import {SidebarButton} from '../Sidebar/SidebarButton';
 
 interface Props {
   onImport: (data: SupportedExportFormats) => void;

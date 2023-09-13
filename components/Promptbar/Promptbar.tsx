@@ -4,8 +4,6 @@ import {useTranslation} from 'react-i18next';
 import {useCreateReducer} from '@/hooks/useCreateReducer';
 
 import {savePrompts} from '@/utils/app/prompts';
-
-import {OpenAIModels} from '@/types/openai';
 import {Snippet} from '@/types/snippet';
 
 import HomeContext from '@/pages/api/home/home.context';

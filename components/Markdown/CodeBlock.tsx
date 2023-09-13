@@ -1,14 +1,11 @@
-import { IconCheck, IconClipboard, IconDownload } from '@tabler/icons-react';
-import { FC, memo, useState } from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import {IconCheck, IconClipboard, IconDownload} from '@tabler/icons-react';
+import {FC, memo, useState} from 'react';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {oneDark} from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
-import {
-  generateRandomString,
-  programmingLanguages,
-} from '@/utils/app/codeblock';
+import {generateRandomString, programmingLanguages,} from '@/utils/app/codeblock';
 
 interface Props {
   language: string;

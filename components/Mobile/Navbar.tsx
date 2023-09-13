@@ -1,7 +1,7 @@
-import { IconPlus } from '@tabler/icons-react';
-import { FC } from 'react';
+import {IconPlus} from '@tabler/icons-react';
+import {FC} from 'react';
 
-import { Conversation } from '@/types/chat';
+import {Conversation} from '@/types/chat';
 
 interface Props {
   selectedConversation: Conversation;

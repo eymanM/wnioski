@@ -1,14 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import {NextApiRequest, NextApiResponse} from 'next';
 
-import { OPENAI_API_HOST } from '@/utils/app/const';
-import { cleanSourceText } from '@/utils/server/google';
+import {OPENAI_API_HOST} from '@/utils/app/const';
+import {cleanSourceText} from '@/utils/server/google';
 
-import { Message } from '@/types/chat';
-import { GoogleBody, GoogleSource } from '@/types/google';
+import {Message} from '@/types/chat';
+import {GoogleBody, GoogleSource} from '@/types/google';
 
-import { Readability } from '@mozilla/readability';
+import {Readability} from '@mozilla/readability';
 import endent from 'endent';
-import jsdom, { JSDOM } from 'jsdom';
+import jsdom, {JSDOM} from 'jsdom';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   try {

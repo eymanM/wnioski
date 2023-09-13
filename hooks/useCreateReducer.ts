@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from 'react';
+import {useMemo, useReducer} from 'react';
 
 // Extracts property names from initial state of reducer to allow typesafe dispatch objects
 export type FieldNames<T> = {

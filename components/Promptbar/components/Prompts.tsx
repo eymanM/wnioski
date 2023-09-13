@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
-import { Snippet } from '@/types/snippet';
+import {Snippet} from '@/types/snippet';
 
-import { PromptComponent } from './Prompt';
+import {PromptComponent} from './Prompt';
 
 interface Props {
   prompts: Snippet[];

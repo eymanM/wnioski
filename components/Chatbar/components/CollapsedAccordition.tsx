@@ -2,8 +2,6 @@ import {Conversations} from "@/components/Chatbar/components/Conversations";
 import {IconPlus} from "@tabler/icons-react";
 import {Project} from "@/components/Chatbar/Chatbar";
 import {useContext, useState} from "react";
-import {ThreadModal} from "@/components/Promptbar/components/ThreadModal";
-import homeContext from "@/pages/api/home/home.context";
 import HomeContext from "@/pages/api/home/home.context";
 import {useTranslation} from "next-i18next";
 

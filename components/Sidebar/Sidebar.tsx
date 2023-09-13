@@ -1,13 +1,8 @@
-import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import {IconPlus} from '@tabler/icons-react';
+import {ReactNode} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import {
-  CloseSidebarButton,
-  OpenSidebarButton,
-} from './components/OpenCloseButton';
-
-import Search from '../Search';
+import {CloseSidebarButton, OpenSidebarButton,} from './components/OpenCloseButton';
 
 interface Props<T> {
   isOpen: boolean;

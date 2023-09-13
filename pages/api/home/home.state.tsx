@@ -1,9 +1,9 @@
-import { Conversation, Message } from '@/types/chat';
-import { ErrorMessage } from '@/types/error';
-import { FolderInterface } from '@/types/folder';
-import { OpenAIModel, OpenAIModelID } from '@/types/openai';
-import { PluginKey } from '@/types/plugin';
-import { Snippet } from '@/types/snippet';
+import {Conversation, Message} from '@/types/chat';
+import {ErrorMessage} from '@/types/error';
+import {FolderInterface} from '@/types/folder';
+import {OpenAIModel, OpenAIModelID} from '@/types/openai';
+import {PluginKey} from '@/types/plugin';
+import {Snippet} from '@/types/snippet';
 import {Project} from "@/components/Chatbar/Chatbar";
 
 export interface HomeInitialState {

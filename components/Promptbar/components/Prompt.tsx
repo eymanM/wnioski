@@ -1,9 +1,7 @@
-import {IconBulbFilled, IconCheck, IconTextCaption, IconTrash, IconX,} from '@tabler/icons-react';
+import {IconTextCaption,} from '@tabler/icons-react';
 import {DragEvent, MouseEventHandler, useContext, useEffect, useState,} from 'react';
 
 import {Snippet} from '@/types/snippet';
-
-import SidebarActionButton from '@/components/Buttons/SidebarActionButton';
 
 import PromptbarContext from '../PromptBar.context';
 import {PromptModal} from './PromptModal';

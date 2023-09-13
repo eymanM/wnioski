@@ -1,25 +1,15 @@
-import {
-  Icon360View,
-  Icon3dCubeSphere, IconAdFilled, IconAdjustmentsFilled,
-  IconCheck,
-  IconCopy,
-  IconEdit,
-  IconRobot,
-  IconTrash, IconUnlink,
-  IconUser,
-} from '@tabler/icons-react';
-import { FC, memo, useContext, useEffect, useRef, useState } from 'react';
+import {IconAdjustmentsFilled, IconRobot, IconUser,} from '@tabler/icons-react';
+import {FC, memo, useContext, useEffect, useRef, useState} from 'react';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
 //import { updateConversation } from '@/utils/app/conversation';
-
 import {Conversation, Message} from '@/types/chat';
 
 import HomeContext from '@/pages/api/home/home.context';
 
-import { CodeBlock } from '../Markdown/CodeBlock';
-import { MemoizedReactMarkdown } from '../Markdown/MemoizedReactMarkdown';
+import {CodeBlock} from '../Markdown/CodeBlock';
+import {MemoizedReactMarkdown} from '../Markdown/MemoizedReactMarkdown';
 
 import rehypeMathjax from 'rehype-mathjax';
 import remarkGfm from 'remark-gfm';

@@ -1,9 +1,9 @@
-import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
-import { FC, useState } from 'react';
+import {IconCheck, IconTrash, IconX} from '@tabler/icons-react';
+import {FC, useState} from 'react';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
-import { SidebarButton } from '@/components/Sidebar/SidebarButton';
+import {SidebarButton} from '@/components/Sidebar/SidebarButton';
 
 interface Props {
   onClearConversations: () => void;

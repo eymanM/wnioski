@@ -1,4 +1,4 @@
-import { Conversation } from '@/types/chat';
+import {Conversation} from '@/types/chat';
 import {
   ExportFormatV1,
   ExportFormatV2,
@@ -7,10 +7,10 @@ import {
   LatestExportFormat,
   SupportedExportFormats,
 } from '@/types/export';
-import { FolderInterface } from '@/types/folder';
-import { Snippet } from '@/types/snippet';
+import {FolderInterface} from '@/types/folder';
+import {Snippet} from '@/types/snippet';
 
-import { cleanConversationHistory } from './clean';
+import {cleanConversationHistory} from './clean';
 
 export function isExportFormatV1(obj: any): obj is ExportFormatV1 {
   return Array.isArray(obj);

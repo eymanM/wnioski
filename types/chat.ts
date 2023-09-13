@@ -1,4 +1,3 @@
-import { OpenAIModel } from './openai';
 import {Snippet} from "@/types/snippet";
 
 export interface Message {

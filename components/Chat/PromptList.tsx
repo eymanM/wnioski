@@ -1,6 +1,6 @@
-import { FC, MutableRefObject } from 'react';
+import {FC, MutableRefObject} from 'react';
 
-import { Snippet } from '@/types/snippet';
+import {Snippet} from '@/types/snippet';
 
 interface Props {
   prompts: Snippet[];

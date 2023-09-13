@@ -1,17 +1,12 @@
-import { IconFileExport, IconSettings } from '@tabler/icons-react';
-import { useContext, useState } from 'react';
+import {IconSettings} from '@tabler/icons-react';
+import {useContext, useState} from 'react';
 
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
 import HomeContext from '@/pages/api/home/home.context';
 
-import { SettingDialog } from '@/components/Settings/SettingDialog';
-
-import { Import } from '../../Settings/Import';
-import { Key } from '../../Settings/Key';
-import { SidebarButton } from '../../Sidebar/SidebarButton';
-import ChatbarContext from '../Chatbar.context';
-import { ClearConversations } from './ClearConversations';
+import {SettingDialog} from '@/components/Settings/SettingDialog';
+import {SidebarButton} from '../../Sidebar/SidebarButton';
 
 
 export const ChatbarSettings = () => {

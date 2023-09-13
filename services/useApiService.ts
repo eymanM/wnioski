@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 
-import { useFetch } from '@/hooks/useFetch';
+import {useFetch} from '@/hooks/useFetch';
 
 export interface GetModelsRequestProps {
   key: string;

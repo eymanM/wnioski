@@ -1,7 +1,5 @@
-import {FC, KeyboardEvent, useContext, useEffect, useRef, useState} from 'react';
+import {FC, KeyboardEvent, useEffect, useRef, useState} from 'react';
 import {Conversation} from "@/types/chat";
-import HomeContext from "@/pages/api/home/home.context";
-import {Snippet} from "@/types/snippet";
 import {useTranslation} from "next-i18next";
 
 interface Props {

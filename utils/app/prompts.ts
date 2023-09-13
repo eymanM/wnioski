@@ -1,4 +1,4 @@
-import { Snippet } from '@/types/snippet';
+import {Snippet} from '@/types/snippet';
 
 export const updatePrompt = (updatedPrompt: Snippet, allPrompts: Snippet[]) => {
   const updatedPrompts = allPrompts.map((c) => {

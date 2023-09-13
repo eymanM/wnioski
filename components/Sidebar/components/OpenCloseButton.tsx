@@ -1,5 +1,4 @@
-
-import { IconArrowBarLeft, IconArrowBarRight } from '@tabler/icons-react';
+import {IconArrowBarLeft, IconArrowBarRight} from '@tabler/icons-react';
 
 interface Props {
   onClick: any;
