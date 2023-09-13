@@ -5,6 +5,7 @@ import {useContext, useState} from "react";
 import {ThreadModal} from "@/components/Promptbar/components/ThreadModal";
 import homeContext from "@/pages/api/home/home.context";
 import HomeContext from "@/pages/api/home/home.context";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   projects: Project[];
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export const CollapsedAccordition = ({projects, handleCreateProject, handleCreateConversation}: Props) => {
+  const { t: tCommon } = useTranslation('common');
+  const { t: tSidebar } = useTranslation('sidebar');
   const [isAccordionOpen, setAccordionOpen] = useState(false);
 
   const {
@@ -25,11 +28,11 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
         <button
           className="text-sidebar flex w-full flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10 relative"
           onClick={async () => {
-            await handleCreateProject('New project');
+            await handleCreateProject(tSidebar('New project'));
           }}
         >
           <IconPlus size={16}/>
-          Add new project
+          {tSidebar('Add new project')}
         </button>
       </div>
       {
@@ -60,7 +63,7 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
                   await handleCreateConversation(project.id);
                 }}
                 className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                title='Add new conversation'
+                title={tSidebar('Add new conversation')!}
               >
                 <IconPlus size={16}/>
               </button>

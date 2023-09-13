@@ -2,6 +2,7 @@ import {FC, KeyboardEvent, useContext, useEffect, useRef, useState} from 'react'
 import {Conversation} from "@/types/chat";
 import HomeContext from "@/pages/api/home/home.context";
 import {Snippet} from "@/types/snippet";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   conversation: Conversation;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcome}) => {
+   const { t: tCommon } = useTranslation('common');
+  const { t: tSidebar } = useTranslation('sidebar');
   const [outcomeState, setOutcomeState] = useState(outcome);
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -64,7 +67,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
           >
 
             <div className="text-sm font-bold text-black dark:text-neutral-200">
-              Outcome
+              {tSidebar('Outcome')}
             </div>
             <textarea
               rows={5}
@@ -87,7 +90,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
                 onClose();
               }}
             >
-              Save
+              {tCommon('Save')}
             </button>
           </div>
         </div>

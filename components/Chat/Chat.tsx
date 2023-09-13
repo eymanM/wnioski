@@ -23,6 +23,7 @@ interface Props {
 
 export const Chat = memo(({ stopConversationRef }: Props) => {
   const { t } = useTranslation('chat');
+  const {t: tCommon} = useTranslation('common');
 
   const {
     state: {
@@ -126,7 +127,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           let isFirst = true;
           let text = '';
           while (!done) {
-            if (stopConversationRef.current === true) {
+            if (stopConversationRef.current) {
               controller.abort();
               done = true;
               break;
@@ -359,7 +360,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         <Spinner size="16px" className="mx-auto" />
                       </div>
                     ) : (
-                      'Applications'
+                      tCommon('Applications')
                     )}
                   </div>
                 </div>

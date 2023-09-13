@@ -19,6 +19,8 @@ import {v4 as uuidv4} from 'uuid';
 
 const Promptbar = () => {
   const { t } = useTranslation('promptbar');
+   const { t: tCommon } = useTranslation('common');
+  const { t: tSidebar } = useTranslation('sidebar');
 
   const promptBarContextValue = useCreateReducer<PromptbarInitialState>({
     initialState,
@@ -41,14 +43,14 @@ const Promptbar = () => {
 
   const handleCreatePrompt = () => {
     if (defaultModelId) {
-      const newPrompt: Snippet = {
+      const newSnippet: Snippet = {
         id: uuidv4(),
-        name: `Snippet ${prompts.length + 1}`,
+        name: `${tSidebar('Context information')} ${prompts.length + 1}`,
         description: '',
         content: '',
       };
 
-      const updatedPrompts = [...prompts, newPrompt];
+      const updatedPrompts = [...prompts, newSnippet];
 
 
 
@@ -124,7 +126,7 @@ const Promptbar = () => {
       <Sidebar<Snippet>
         side={'right'}
         isOpen={showPromptbar}
-        addItemButtonTitle='Snippet'
+        addItemButtonTitle={tSidebar('Add snippet')}
         itemComponent={
           <Prompts
             prompts={filteredPrompts}

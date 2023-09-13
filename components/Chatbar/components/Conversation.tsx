@@ -6,6 +6,7 @@ import {Conversation} from '@/types/chat';
 import HomeContext from '@/pages/api/home/home.context';
 import {ThreadModal} from "@/components/Promptbar/components/ThreadModal";
 import {getProjects, handleUpdateConversationInProject} from "@/utils/app/projs_threads";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   conversation: Conversation;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export const ConversationComponent = ({conversation, projectId}: Props) => {
+   const { t: tCommon } = useTranslation('common');
+  const { t: tSidebar } = useTranslation('sidebar');
   const {
     state: { selectedConversation, messageIsStreaming },
     handleSelectConversation,
@@ -74,7 +77,7 @@ export const ConversationComponent = ({conversation, projectId}: Props) => {
                   setShowModal(true);
                 }}
                 className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                title='Settings'
+                title={tCommon('Settings')!}
               >
                 <IconSettings2 size={16}/>
               </button>

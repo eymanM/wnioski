@@ -2,6 +2,7 @@ import {FC, KeyboardEvent, useContext, useEffect, useRef, useState} from 'react'
 import {Conversation} from "@/types/chat";
 import HomeContext from "@/pages/api/home/home.context";
 import {Snippet} from "@/types/snippet";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   conversation: Conversation;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
+   const { t: tCommon } = useTranslation('common');
+  const { t: tSidebar } = useTranslation('sidebar');
   const [name, setName] = useState(conversation.name);
   const [outcome, setOutcome] = useState(conversation.outcome);
   //const [snippets, setSnippets] = useState(conversation.snippets);
@@ -97,7 +100,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
             </div>
 
             <div className="text-sm font-bold text-black dark:text-neutral-200">
-              Name
+              {tCommon('Name')}
             </div>
             <input
               ref={nameInputRef}
@@ -108,7 +111,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              Outcome
+              {tSidebar('Outcome')}
             </div>
             <textarea
               rows={5}
@@ -120,7 +123,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              Outcomes from other threads
+              {tSidebar('Outcomes from other threads')}
             </div>
 
             <div>
@@ -141,7 +144,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
             </div>
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              Snippets
+              {tSidebar('Context informations')}
             </div>
 
             <div>
@@ -177,7 +180,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
                 onClose();
               }}
             >
-              Save
+              {tCommon('Save')}
             </button>
           </div>
         </div>

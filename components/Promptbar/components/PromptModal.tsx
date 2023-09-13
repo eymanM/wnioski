@@ -12,6 +12,8 @@ interface Props {
 
 export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
   const { t } = useTranslation('promptbar');
+   const { t: tCommon } = useTranslation('common');
+  const { t: tSidebar } = useTranslation('sidebar');
   const [name, setName] = useState(prompt.name);
   const [description, setDescription] = useState(prompt.description);
   const [content, setContent] = useState(prompt.content);
@@ -78,24 +80,24 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {t('Description')}
+              {tCommon('Description')}
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{ resize: 'none' }}
-              placeholder={'A description for your snippet'}
+              placeholder={tSidebar('Description for this context information')!}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {'Snippet'}
+              {tSidebar('Context information')!}
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{ resize: 'none' }}
-              placeholder={'Your snippet'}
+              placeholder={tSidebar('Your snippet..')!}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={10}
@@ -116,7 +118,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
                 onClose();
               }}
             >
-              {t('Save')}
+              {tCommon('Save')}
             </button>
           </div>
         </div>

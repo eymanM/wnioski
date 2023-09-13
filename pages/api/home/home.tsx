@@ -46,7 +46,7 @@ const Home = ({
   serverSidePluginKeysSet,
   defaultModelId,
 }: Props) => {
-  const { t } = useTranslation('chat');
+  const { t } = useTranslation('sidebar');
   const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
@@ -120,7 +120,7 @@ const Home = ({
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: t('New Conversation'),
+      name: t('New conversation'),
       messages: [],
       includedOutcomesFromConversationIds: [],
       prompt: DEFAULT_SYSTEM_PROMPT,
@@ -269,7 +269,7 @@ const Home = ({
         field: 'selectedConversation',
         value: {
           id: uuidv4(),
-          name: t('New Conversation'),
+          name: t('cew Conversation'),
           messages: [],
           model: OpenAIModels[defaultModelId],
           prompt: DEFAULT_SYSTEM_PROMPT,

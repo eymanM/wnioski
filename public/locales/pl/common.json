@@ -1,1 +1,10 @@
-{}
+{
+  "Name": "Nazwa",
+  "Description": "Opis",
+  "Outcomes from other threads": "Wyniki rozmów z wątków",
+  "Outcome": "Wynik rozmowy",
+  "Information": "Informacja",
+  "Settings": "Ustawienia",
+  "Save": "Zapisz",
+  "Applications": "Wnioski"
+}

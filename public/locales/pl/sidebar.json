@@ -1,5 +1,6 @@
 {
   "New folder": "Nowy folder",
+  "Settings": "Ustawienia",
   "New chat": "Nowy chat",
   "No conversations.": "Brak rozmów.",
   "Search conversations...": "Szukaj rozmów...",
@@ -7,5 +8,17 @@
   "Import data": "Import rozmów",
   "Are you sure?": "Czy jesteś pewien?",
   "Clear conversations": "Usuń rozmowy",
-  "Export data": "Eksport rozmów"
+  "Export data": "Eksport rozmów",
+  "Add new project": "Dodaj nowy projekt",
+  "New project": "Nowy projekt",
+  "Remove project": "Usuń projekt",
+  "Add new conversation": "Dodaj nową rozmowę",
+  "New conversation": "Nowa rozmowa",
+  "Remove conversation": "Usuń rozmowę",
+  "Context information": "Informacja do kontekstu",
+  "Add snippet": "Dodaj fragment",
+  "Description for this context information": "Opis dla tej informacji do kontekstu",
+  "Your snippet..": "Twój fragment..",
+  "Context informations": "Informacje do kontekstu",
+  "Outcomes from other threads": "Wyniki z innych wątków"
 }
