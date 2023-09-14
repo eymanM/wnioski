@@ -1,6 +1,6 @@
 {
   "OpenAI API Key Required": "Klucz do OpenAI API jest wymagany",
-  "Please set your OpenAI API key in the bottom left of the sidebar and then create new project and conversation.": "Proszę wprowadzić swój klucz do OpenAI API na pasku bocznym w lewym dolnym rogu a następnie stwórz nowy project i konwersację",
+  "Please set your OpenAI API key in the bottom left of the sidebar and then create new project and conversation.": "Proszę wprowadzić swój klucz do OpenAI API na pasku bocznym w lewym dolnym rogu a następnie stwórz nowy projekt i konwersację",
   "Stop Generating": "Zatrzymaj generowanie",
   "Prompt limit is {{maxLength}} characters": "Limit prompta wynosi {{maxLength}} znaków",
   "System Prompt": "Prompt systemowy",

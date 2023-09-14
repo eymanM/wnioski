@@ -113,7 +113,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {tSidebar('Outcome')}
+              {tCommon('Outcome')}
             </div>
             <textarea
               rows={5}

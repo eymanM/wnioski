@@ -12,12 +12,12 @@ import useErrorService from '@/services/errorService';
 import useApiService from '@/services/useApiService';
 
 import {cleanConversationHistory, cleanSelectedConversation,} from '@/utils/app/clean';
-import {DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE} from '@/utils/app/const';
+import {DEFAULT_SYSTEM_PROMPT} from '@/utils/app/const';
 import {getSettings} from '@/utils/app/settings';
 
 import {Conversation} from '@/types/chat';
 import {KeyValuePair} from '@/types/data';
-import {fallbackModelID, OpenAIModelID, OpenAIModels} from '@/types/openai';
+import {fallbackModelID, OpenAIModelID} from '@/types/openai';
 
 import HomeContext from './home.context';
 import {HomeInitialState, initialState} from './home.state';
@@ -90,14 +90,11 @@ const Home = ({
     dispatch({field: 'modelError', value: getModelsError(error)});
   }, [dispatch, error, getModelsError]);
 
-  // FETCH MODELS ----------------------------------------------
-
   const handleSelectConversation = (conversation: Conversation) => {
     dispatch({
       field: 'selectedConversation',
       value: conversation,
     });
-
     saveConversation(conversation);
   };
 
@@ -128,11 +125,9 @@ const Home = ({
     };
 
     const updatedConversations = [...conversations || [], newConversation];
-
     project.conversations = updatedConversations
 
     dispatch({field: 'selectedConversation', value: newConversation});
-
     dispatch({field: 'conversations', value: updatedConversations});
     saveConversation(newConversation);
 
@@ -147,11 +142,9 @@ const Home = ({
     const conversations = project.conversations.filter((c) => c.id !== conversationId);
 
     const updatedConversations = [...conversations ];
-
     project.conversations = updatedConversations
 
     dispatch({field: 'selectedConversation', value: {}});
-
     dispatch({field: 'conversations', value: updatedConversations});
 
     await handleUpdateProject(project);
@@ -175,8 +168,6 @@ const Home = ({
 
     dispatch({field: 'selectedConversation', value: single});
   };
-
-  // EFFECTS  --------------------------------------------
 
   useEffect(() => {
     if (window.innerWidth < 640) {
