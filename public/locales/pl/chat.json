@@ -1,6 +1,6 @@
 {
   "OpenAI API Key Required": "Klucz do OpenAI API jest wymagany",
-  "Please set your OpenAI API key in the bottom left of the sidebar.": "Proszę wprowadzić swój klucz do OpenAI API na pasku bocznym w lewym dolnym rogu",
+  "Please set your OpenAI API key in the bottom left of the sidebar and then create new project and conversation.": "Proszę wprowadzić swój klucz do OpenAI API na pasku bocznym w lewym dolnym rogu a następnie stwórz nowy project i konwersację",
   "Stop Generating": "Zatrzymaj generowanie",
   "Prompt limit is {{maxLength}} characters": "Limit prompta wynosi {{maxLength}} znaków",
   "System Prompt": "Prompt systemowy",
@@ -24,5 +24,6 @@
   "Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.": "Limit wiadomości wynosi {{maxLength}} znaków. Wprowadziłeś {{valueLength}} znaków.",
   "Please enter a message": "Proszę wpisać swoją wiadomość",
   "Chatbot UI is an advanced chatbot kit for OpenAI's chat models aiming to mimic ChatGPT's interface and functionality.": "Chatbot UI to zaawansowane narzędzie chatbotów dla modeli czatów od OpenAI, którego celem jest naśladowanie interfejsu i funkcjonalności ChatGPT.",
-  "Are you sure you want to clear all messages?": "Czy na pewno chcesz usunąć wszystkie wiadomości?"
+  "Are you sure you want to clear all messages?": "Czy na pewno chcesz usunąć wszystkie wiadomości?",
+  "If you don't have an OpenAI API key, you can get one here: ": "Jeśli nie masz klucza do OpenAI API, możesz go uzyskać tutaj: "
 }

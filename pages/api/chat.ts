@@ -41,7 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
       const message = messages[i];
       const tokens = encoding.encode(message.content);
 
-      if (tokenCount + tokens.length + 1000 > 1000) {
+      if (tokenCount + tokens.length > 3000) {
         break;
       }
       tokenCount += tokens.length;

@@ -1,4 +1,4 @@
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 
 import {useTranslation} from 'next-i18next';
 
@@ -68,6 +68,15 @@ export const Chatbar = () => {
     homeDispatch({field: 'projects', value: await getProjects()});
   }
 
+   const handleApiKeyChange = useCallback(
+    (apiKey: string) => {
+      homeDispatch({ field: 'apiKey', value: apiKey });
+
+      localStorage.setItem('apiKey', apiKey);
+    },
+    [homeDispatch],
+  );
+
   const handleToggleChatbar = () => {
     homeDispatch({field: 'showChatbar', value: !showChatbar});
     localStorage.setItem('showChatbar', JSON.stringify(!showChatbar));
@@ -97,6 +106,7 @@ export const Chatbar = () => {
     <ChatbarContext.Provider
       value={{
         ...chatBarContextValue,
+        handleApiKeyChange,
       }}
     >
       <Sidebar<Project>
