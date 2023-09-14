@@ -6,18 +6,20 @@ import {useTranslation} from "next-i18next";
 
 interface Props {
   conversation: Conversation;
+  projectId: string;
   onClose: () => void;
   onUpdate: (conversation: Conversation) => void;
+  onDelete: (projectId: string, conversationId: string) => Promise<void>;
 }
 
-export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
+export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelete, projectId}) => {
   const {t: tCommon} = useTranslation('common');
   const {t: tSidebar} = useTranslation('sidebar');
   const [name, setName] = useState(conversation.name);
   const [outcome, setOutcome] = useState(conversation.outcome);
   //const [snippets, setSnippets] = useState(conversation.snippets);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const nameInputRef = useRef<HTMLInputElement>(null);
+  const threadModalRef = useRef<HTMLDivElement>(null);
+  const threadNameInputRef = useRef<HTMLInputElement>(null);
 
   const [selectedSnippets, setSelectedSnippets] = useState<Snippet[]>(conversation.snippets);
   const [selectedOutcomesIds, setSelectedOutcomesIds] = useState<string[]>(conversation.includedOutcomesFromConversationIds);
@@ -57,7 +59,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
 
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      if (threadModalRef.current && !threadModalRef.current.contains(e.target as Node)) {
         window.addEventListener('mouseup', handleMouseUp);
       }
     };
@@ -75,7 +77,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
   }, [onClose]);
 
   useEffect(() => {
-    nameInputRef.current?.focus();
+    threadNameInputRef.current?.focus();
   }, []);
 
   return (
@@ -91,7 +93,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
           />
 
           <div
-            ref={modalRef}
+            ref={threadModalRef}
             className="dark:border-netural-400 inline-block max-h-[400px] transform overflow-y-auto rounded-lg border border-gray-300 bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-[#202123] sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
             role="dialog"
           >
@@ -103,7 +105,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
               {tCommon('Name')}
             </div>
             <input
-              ref={nameInputRef}
+              ref={threadNameInputRef}
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               placeholder='Name of your AI conversation for this thread.'
               value={name}
@@ -181,6 +183,17 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate}) => {
               }}
             >
               {tCommon('Save')}
+            </button>
+
+            <button
+              type="button"
+              className="w-full px-4 py-2 mt-10 border rounded-lg shadow border-neutral-500 text-neutral-900 hover:bg-neutral-100 focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-white dark:text-black dark:hover:bg-neutral-300"
+              onClick={async () => {
+                await onDelete(projectId, conversation.id);
+                onClose();
+              }}
+            >
+              {tCommon('Delete')}
             </button>
           </div>
         </div>

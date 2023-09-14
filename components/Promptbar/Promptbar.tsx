@@ -14,6 +14,7 @@ import PromptbarContext from './PromptBar.context';
 import {initialState, PromptbarInitialState} from './Promptbar.state';
 
 import {v4 as uuidv4} from 'uuid';
+import {s} from "vitest/dist/types-fafda418";
 
 const Promptbar = () => {
 
@@ -57,17 +58,17 @@ const Promptbar = () => {
     }
   };
 
-  const handleDeletePrompt = (prompt: Snippet) => {
-    const updatedPrompts = prompts.filter((p) => p.id !== prompt.id);
+  const handleDeletePrompt = (snippetId: string) => {
+    const updatedPrompts = prompts.filter((p) => p.id !== snippetId);
 
     homeDispatch({field: 'prompts', value: updatedPrompts});
     savePrompts(updatedPrompts);
   };
 
-  const handleUpdatePrompt = (prompt: Snippet) => {
+  const handleUpdatePrompt = (snippet: Snippet) => {
     const updatedPrompts = prompts.map((p) => {
-      if (p.id === prompt.id) {
-        return prompt;
+      if (p.id === snippet.id) {
+        return snippet;
       }
 
       return p;

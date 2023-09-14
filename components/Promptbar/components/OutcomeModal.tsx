@@ -13,8 +13,8 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
   const {t: tCommon} = useTranslation('common');
   const {t: tSidebar} = useTranslation('sidebar');
   const [outcomeState, setOutcomeState] = useState(outcome);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const nameInputRef = useRef<HTMLInputElement>(null);
+  const outcomeModalRef = useRef<HTMLDivElement>(null);
+  const outcomeNameInputRef = useRef<HTMLInputElement>(null);
 
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -25,7 +25,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
 
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      if (outcomeModalRef.current && !outcomeModalRef.current.contains(e.target as Node)) {
         window.addEventListener('mouseup', handleMouseUp);
       }
     };
@@ -43,7 +43,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
   }, [onClose]);
 
   useEffect(() => {
-    nameInputRef.current?.focus();
+    outcomeNameInputRef.current?.focus();
   }, []);
 
   return (
@@ -59,7 +59,7 @@ export const OutcomeModal: FC<Props> = ({conversation, onClose, onUpdate, outcom
           />
 
           <div
-            ref={modalRef}
+            ref={outcomeModalRef}
             className="dark:border-netural-400 inline-block max-h-[400px] transform overflow-y-auto rounded-lg border border-gray-300 bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-[#202123] sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
             role="dialog"
           >

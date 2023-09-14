@@ -142,6 +142,23 @@ const Home = ({
     dispatch({field: 'loading', value: false});
   };
 
+  const handleDeleteConversation = async (projectId: string, conversationId: string) => {
+    const project = projects.find((p) => p.id === projectId)!;
+    const conversations = project.conversations.filter((c) => c.id !== conversationId);
+
+    const updatedConversations = [...conversations ];
+
+    project.conversations = updatedConversations
+
+    dispatch({field: 'selectedConversation', value: {}});
+
+    dispatch({field: 'conversations', value: updatedConversations});
+
+    await handleUpdateProject(project);
+    const updatedProjects = projects.map((p) => p.id === projectId ? project : p);
+    dispatch({field: 'projects', value: updatedProjects});
+  };
+
   const handleUpdateConversation = async (
     projectId: string,
     conversation: Conversation,
@@ -291,7 +308,8 @@ const Home = ({
         handleCreateProject,
         handleDeleteProject,
         handleUpdateProject,
-        handleUpdateConversation
+        handleUpdateConversation,
+        handleDeleteConversation
       }}
     >
       <Head>

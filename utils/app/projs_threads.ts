@@ -11,7 +11,8 @@ export const handleCreateProject = async (project: Project) => {
   const projsStorageObj = localStorage.getItem('projects');
   const projsStorage = projsStorageObj ? JSON.parse(projsStorageObj) : [] as Project[];
 
-  saveProject([...projsStorage, project]);
+  saveProjects([...projsStorage, project]);
+  return { projects: [...projsStorage, project] };
 }
 
 // handle update project
@@ -26,7 +27,8 @@ export const handleUpdateProject = async (project: Project) => {
     return p;
   });
 
-  saveProject(updatedStorage);
+  saveProjects(updatedStorage);
+  return { projects: updatedStorage };
 }
 
 export const handleDeleteProject = async (projectId: string) => {
@@ -35,7 +37,8 @@ export const handleDeleteProject = async (projectId: string) => {
 
   const updatedStorage = projsStorage.filter((p: Project) => p.id !== projectId);
 
-  saveProject(updatedStorage);
+  saveProjects(updatedStorage);
+  return { projects: updatedStorage };
 }
 
 
@@ -59,10 +62,11 @@ export const handleUpdateConversationInProject = async (projectId: string, conve
     return p;
   });
 
-  saveProject(updatedStorage);
+  saveProjects(updatedStorage);
   const conversations = projsStorage.find((p: Project) => p.id === projectId).conversations;
 
   return {
+    projects: updatedStorage,
     single: conversation,
     all: conversations,
   };
@@ -72,6 +76,6 @@ export const saveConversation = (conversation: Conversation) => {
   localStorage.setItem('selectedConversation', JSON.stringify(conversation));
 };
 
-export const saveProject = (projs: Project[]) => {
+export const saveProjects = (projs: Project[]) => {
   localStorage.setItem('projects', JSON.stringify(projs));
 };

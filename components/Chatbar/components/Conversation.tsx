@@ -17,19 +17,15 @@ export const ConversationComponent = ({conversation, projectId}: Props) => {
   const {t: tCommon} = useTranslation('common');
 
   const {
-    state: {selectedConversation, messageIsStreaming},
+    state: {selectedConversation, messageIsStreaming, projects},
     handleSelectConversation,
+    handleDeleteConversation,
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
-  //const { handleDeleteConversation } = useContext(ChatbarContext);
 
-
-  const [showModal, setShowModal] = useState(false);
-
-
+  const [showThreadModal, setThreadShowModal] = useState(false);
   const handleUpdate = async (conversation: Conversation) => {
-    //const selectedProjId = localStorage.getItem('selectedProjectId')
     await handleUpdateConversationInProject(projectId, conversation)
     const projs = await getProjects();
 
@@ -64,7 +60,7 @@ export const ConversationComponent = ({conversation, projectId}: Props) => {
               </div>
               <button
                 onClick={async () => {
-                  setShowModal(true);
+                  setThreadShowModal(true);
                 }}
                 className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
                 title={tCommon('Settings')!}
@@ -76,11 +72,13 @@ export const ConversationComponent = ({conversation, projectId}: Props) => {
           </div>
         </div>
       )}
-      {showModal && (
+      {showThreadModal && (
         <ThreadModal
           conversation={conversation}
-          onClose={() => setShowModal(false)}
+          projectId={projectId}
+          onClose={() => setThreadShowModal(false)}
           onUpdate={handleUpdate}
+          onDelete={handleDeleteConversation}
         />
       )}
     </div>

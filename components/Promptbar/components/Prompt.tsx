@@ -13,6 +13,7 @@ interface Props {
 export const PromptComponent = ({prompt}: Props) => {
   const {
     handleUpdatePrompt,
+    handleDeletePrompt
 
   } = useContext(PromptbarContext);
 
@@ -20,8 +21,12 @@ export const PromptComponent = ({prompt}: Props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
 
-  const handleUpdate = (prompt: Snippet) => {
-    handleUpdatePrompt(prompt);
+  const handleUpdateSnippet = (snippet: Snippet) => {
+    handleUpdatePrompt(snippet);
+  };
+
+  const handleDeleteSnippet = async (snippetId: string) => {
+    handleDeletePrompt(snippetId);
   };
 
 
@@ -58,31 +63,12 @@ export const PromptComponent = ({prompt}: Props) => {
         </div>
       </button>
 
-      {/*{(isDeleting || isRenaming) && (*/}
-      {/*  <div className="absolute right-1 z-10 flex text-gray-300">*/}
-      {/*    <SidebarActionButton handleClick={handleDelete}>*/}
-      {/*      <IconCheck size={18} />*/}
-      {/*    </SidebarActionButton>*/}
-
-      {/*    <SidebarActionButton handleClick={handleCancelDelete}>*/}
-      {/*      <IconX size={18} />*/}
-      {/*    </SidebarActionButton>*/}
-      {/*  </div>*/}
-      {/*)}*/}
-
-      {/*{!isDeleting && !isRenaming && (*/}
-      {/*  <div className="absolute right-1 z-10 flex text-gray-300">*/}
-      {/*    <SidebarActionButton handleClick={handleOpenDeleteModal}>*/}
-      {/*      <IconTrash size={18} />*/}
-      {/*    </SidebarActionButton>*/}
-      {/*  </div>*/}
-      {/*)}*/}
-
       {showModal && (
         <PromptModal
           prompt={prompt}
           onClose={() => setShowModal(false)}
-          onUpdatePrompt={handleUpdate}
+          onUpdateSnippet={handleUpdateSnippet}
+          onDeleteSnippet={handleDeleteSnippet}
         />
       )}
     </div>

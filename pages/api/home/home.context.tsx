@@ -14,10 +14,11 @@ export interface HomeContextProps {
   handleNewConversation: (projectId: string) => Promise<void>;
   handleSelectConversation: (conversation: Conversation) => void;
   handleSelectProj: (projectId: string, threadId: string) => void;
-  handleCreateProject: (project: Project) => void;
-  handleDeleteProject: (projectId: string) => void;
-  handleUpdateProject: (project: Project) => void;
+  handleCreateProject: (project: Project) => Promise<{ projects: Project[] }>;
+  handleDeleteProject: (projectId: string) => Promise<{ projects: Project[] }>;
+  handleUpdateProject: (project: Project) => Promise<{ projects: Project[] }>;
   handleUpdateConversation: (projectId: string, conversation: Conversation, data: KeyValuePair) => void;
+  handleDeleteConversation: (projectId: string, conversationId: string) => Promise<void>;
 }
 
 const HomeContext = createContext<HomeContextProps>(undefined!);

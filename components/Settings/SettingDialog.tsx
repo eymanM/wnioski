@@ -23,14 +23,15 @@ export const SettingDialog: FC<Props> = ({open, onClose}) => {
     initialState: settings,
   });
   const {dispatch: homeDispatch} = useContext(HomeContext);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const settingsModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      if (settingsModalRef.current && !settingsModalRef.current.contains(e.target as Node)) {
         window.addEventListener('mouseup', handleMouseUp);
       }
     };
+
 
     const handleMouseUp = () => {
       window.removeEventListener('mouseup', handleMouseUp);
@@ -65,7 +66,7 @@ export const SettingDialog: FC<Props> = ({open, onClose}) => {
           />
 
           <div
-            ref={modalRef}
+            ref={settingsModalRef}
             className="dark:border-netural-400 inline-block max-h-[400px] transform overflow-y-auto rounded-lg border border-gray-300 bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-[#202123] sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
             role="dialog"
           >

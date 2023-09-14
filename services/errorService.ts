@@ -18,12 +18,6 @@ const useErrorService = () => {
             messageLines: error.statusText
               ? [error.statusText]
               : [
-                t(
-                  'Make sure your OpenAI API key is set in the bottom left of the sidebar.',
-                ),
-                t(
-                  'If you completed this step, OpenAI may be experiencing issues.',
-                ),
               ],
           } as ErrorMessage);
       },

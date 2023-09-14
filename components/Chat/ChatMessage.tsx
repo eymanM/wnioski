@@ -50,7 +50,6 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
   };
 
   const handleUpdate = async (conversation: Conversation) => {
-    //const selectedProjId = localStorage.getItem('selectedProjectId')!
     await handleUpdateConversationInProject(selectedProjectId!, conversation)
     const projs = await getProjects();
 
@@ -209,7 +208,7 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
                 }}
               >
                 {`${message.content}${
-                  messageIsStreaming && messageIndex == (selectedConversation?.messages.length ?? 0) - 1 ? '`▍`' : ''
+                  messageIsStreaming && messageIndex == (selectedConversation?.messages?.length ?? 0) - 1 ? '`▍`' : ''
                 }`}
               </MemoizedReactMarkdown>
 

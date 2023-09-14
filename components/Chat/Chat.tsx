@@ -166,8 +166,6 @@ export const Chat = memo(({stopConversationRef}: Props) => {
               field: 'selectedConversation',
               value: updatedConversation,
             });
-
-            //const selectedProjectId = localStorage.getItem('selectedProjectId');
             const proj = projects.find((proj) => proj.id === selectedProjectId!)!;
             proj.conversations = proj.conversations?.map((conv) => {
               if (conv.id === selectedConversation.id) {
@@ -265,11 +263,14 @@ export const Chat = memo(({stopConversationRef}: Props) => {
   // }, [currentMessage]);
 
   useEffect(() => {
-    throttledScrollDown();
+    if (selectedConversation) {
+      throttledScrollDown();
+
     selectedConversation &&
     setCurrentMessage(
-      selectedConversation.messages[selectedConversation.messages.length - 2],
+      selectedConversation.messages?.[selectedConversation.messages.length - 2],
     );
+    }
   }, [selectedConversation, throttledScrollDown]);
 
   useEffect(() => {
@@ -345,7 +346,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
             ref={chatContainerRef}
             onScroll={handleScroll}
           >
-            {selectedConversation?.messages.length === 0 ? (
+            {selectedConversation?.messages?.length === 0 ? (
               <>
                 <div className="mx-auto flex flex-col space-y-5 md:space-y-10 px-3 pt-5 md:pt-12 sm:max-w-[600px]">
                   <div className="text-center text-3xl font-semibold text-gray-800 dark:text-gray-100">
@@ -362,7 +363,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
             ) : (
               <>
 
-                {selectedConversation?.messages.map((message, index) => (
+                {selectedConversation?.messages?.map((message, index) => (
                   <MemoizedChatMessage
                     key={index}
                     message={message}
@@ -372,7 +373,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
                       // discard edited message and the ones that come after then resend
                       handleSend(
                         editedMessage,
-                        selectedConversation?.messages.length - index,
+                        selectedConversation?.messages?.length - index,
                       );
                     }}
                   />
