@@ -14,7 +14,7 @@ import ChatbarContext from './Chatbar.context';
 import {ChatbarInitialState, initialState} from './Chatbar.state';
 
 import {v4 as uuidv4} from 'uuid';
-import {getProjects} from "@/utils/app/projs_threads";
+import {getProjects} from "@/utils/app/projects";
 import {CollapsedAccordition} from "@/components/Chatbar/components/CollapsedAccordition";
 
 export interface Project {
@@ -25,7 +25,6 @@ export interface Project {
   createdAt: string;
   modifiedAt: string;
 }
-
 
 export const Chatbar = () => {
   const {t} = useTranslation('sidebar');
@@ -68,9 +67,9 @@ export const Chatbar = () => {
     homeDispatch({field: 'projects', value: await getProjects()});
   }
 
-   const handleApiKeyChange = useCallback(
+  const handleApiKeyChange = useCallback(
     (apiKey: string) => {
-      homeDispatch({ field: 'apiKey', value: apiKey });
+      homeDispatch({field: 'apiKey', value: apiKey});
 
       localStorage.setItem('apiKey', apiKey);
     },

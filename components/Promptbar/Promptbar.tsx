@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 
 import {useCreateReducer} from '@/hooks/useCreateReducer';
 
-import {savePrompts} from '@/utils/app/prompts';
+import {saveSnippets} from '@/utils/app/prompts';
 import {Snippet} from '@/types/snippet';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -14,7 +14,6 @@ import PromptbarContext from './PromptBar.context';
 import {initialState, PromptbarInitialState} from './Promptbar.state';
 
 import {v4 as uuidv4} from 'uuid';
-import {s} from "vitest/dist/types-fafda418";
 
 const Promptbar = () => {
 
@@ -26,7 +25,7 @@ const Promptbar = () => {
   });
 
   const {
-    state: {prompts, defaultModelId, showPromptbar},
+    state: {snippets: snippets, defaultModelId, showPromptbar},
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -44,38 +43,36 @@ const Promptbar = () => {
     if (defaultModelId) {
       const newSnippet: Snippet = {
         id: uuidv4(),
-        name: `${tSidebar('Context information')} ${prompts.length + 1}`,
+        name: `${tSidebar('Context information')} ${snippets.length + 1}`,
         description: '',
         content: '',
       };
 
-      const updatedPrompts = [...prompts, newSnippet];
+      const updatedPrompts = [...snippets, newSnippet];
+      homeDispatch({field: 'snippets', value: updatedPrompts});
 
-
-      homeDispatch({field: 'prompts', value: updatedPrompts});
-
-      savePrompts(updatedPrompts);
+      saveSnippets(updatedPrompts);
     }
   };
 
   const handleDeletePrompt = (snippetId: string) => {
-    const updatedPrompts = prompts.filter((p) => p.id !== snippetId);
+    const updatedPrompts = snippets.filter((p) => p.id !== snippetId);
 
-    homeDispatch({field: 'prompts', value: updatedPrompts});
-    savePrompts(updatedPrompts);
+    homeDispatch({field: 'snippets', value: updatedPrompts});
+    saveSnippets(updatedPrompts);
   };
 
   const handleUpdatePrompt = (snippet: Snippet) => {
-    const updatedPrompts = prompts.map((p) => {
+    const updatedPrompts = snippets.map((p) => {
       if (p.id === snippet.id) {
         return snippet;
       }
 
       return p;
     });
-    homeDispatch({field: 'prompts', value: updatedPrompts});
+    homeDispatch({field: 'snippets', value: updatedPrompts});
 
-    savePrompts(updatedPrompts);
+    saveSnippets(updatedPrompts);
   };
 
   const handleDrop = (e: any) => {
@@ -97,7 +94,7 @@ const Promptbar = () => {
     if (searchTerm) {
       promptDispatch({
         field: 'filteredPrompts',
-        value: prompts.filter((prompt) => {
+        value: snippets.filter((prompt) => {
           const searchable =
             prompt.name.toLowerCase() +
             ' ' +
@@ -108,9 +105,9 @@ const Promptbar = () => {
         }),
       });
     } else {
-      promptDispatch({field: 'filteredPrompts', value: prompts});
+      promptDispatch({field: 'filteredPrompts', value: snippets});
     }
-  }, [searchTerm, prompts]);
+  }, [searchTerm, snippets]);
 
   return (
     <PromptbarContext.Provider

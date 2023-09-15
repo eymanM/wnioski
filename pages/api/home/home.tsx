@@ -29,7 +29,7 @@ import {
   handleUpdateConversationInProject,
   handleUpdateProject,
   saveConversation
-} from "@/utils/app/projs_threads";
+} from "@/utils/app/projects";
 import {Chatbar} from "@/components/Chatbar/Chatbar";
 import Promptbar from "@/components/Promptbar";
 import {Chat} from "@/components/Chat/Chat";
@@ -43,7 +43,6 @@ interface Props {
 
 const Home = ({
   serverSideApiKeyIsSet,
-  serverSidePluginKeysSet,
   defaultModelId,
 }: Props) => {
   const {t} = useTranslation('sidebar');
@@ -141,7 +140,7 @@ const Home = ({
     const project = projects.find((p) => p.id === projectId)!;
     const conversations = project.conversations.filter((c) => c.id !== conversationId);
 
-    const updatedConversations = [...conversations ];
+    const updatedConversations = [...conversations];
     project.conversations = updatedConversations
 
     dispatch({field: 'selectedConversation', value: {}});
@@ -183,12 +182,7 @@ const Home = ({
       field: 'serverSideApiKeyIsSet',
       value: serverSideApiKeyIsSet,
     });
-    serverSidePluginKeysSet &&
-    dispatch({
-      field: 'serverSidePluginKeysSet',
-      value: serverSidePluginKeysSet,
-    });
-  }, [defaultModelId, serverSideApiKeyIsSet, serverSidePluginKeysSet]);
+  }, [defaultModelId, serverSideApiKeyIsSet]);
 
   // ON LOAD --------------------------------------------
 
@@ -211,14 +205,6 @@ const Home = ({
       dispatch({field: 'apiKey', value: apiKey});
     }
 
-    const pluginKeys = localStorage.getItem('pluginKeys');
-    if (serverSidePluginKeysSet) {
-      dispatch({field: 'pluginKeys', value: []});
-      localStorage.removeItem('pluginKeys');
-    } else if (pluginKeys) {
-      dispatch({field: 'pluginKeys', value: pluginKeys});
-    }
-
     if (window.innerWidth < 640) {
       dispatch({field: 'showChatbar', value: false});
       dispatch({field: 'showPromptbar', value: false});
@@ -234,14 +220,9 @@ const Home = ({
       dispatch({field: 'showPromptbar', value: showPromptbar === 'true'});
     }
 
-    const folders = localStorage.getItem('folders');
-    if (folders) {
-      dispatch({field: 'folders', value: JSON.parse(folders)});
-    }
-
-    const prompts = localStorage.getItem('prompts');
-    if (prompts) {
-      dispatch({field: 'prompts', value: JSON.parse(prompts)});
+    const snippets = localStorage.getItem('snippets');
+    if (snippets) {
+      dispatch({field: 'snippets', value: JSON.parse(snippets)});
     }
 
     const conversationHistory = localStorage.getItem('conversationHistory');
@@ -278,7 +259,6 @@ const Home = ({
     defaultModelId,
     dispatch,
     serverSideApiKeyIsSet,
-    serverSidePluginKeysSet,
   ]);
 
   return (
@@ -340,20 +320,10 @@ export const getServerSideProps: GetServerSideProps = async ({locale}) => {
       process.env.DEFAULT_MODEL) ||
     fallbackModelID;
 
-  let serverSidePluginKeysSet = false;
-
-  const googleApiKey = process.env.GOOGLE_API_KEY;
-  const googleCSEId = process.env.GOOGLE_CSE_ID;
-
-  if (googleApiKey && googleCSEId) {
-    serverSidePluginKeysSet = true;
-  }
-
   return {
     props: {
       serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
       defaultModelId,
-      serverSidePluginKeysSet,
       ...(await serverSideTranslations(locale ?? 'en', [
         'common',
         'chat',

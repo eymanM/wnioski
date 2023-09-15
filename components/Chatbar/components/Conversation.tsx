@@ -5,7 +5,7 @@ import {Conversation} from '@/types/chat';
 
 import HomeContext from '@/pages/api/home/home.context';
 import {ThreadModal} from "@/components/Promptbar/components/ThreadModal";
-import {getProjects, handleUpdateConversationInProject} from "@/utils/app/projs_threads";
+import {getProjects, handleUpdateConversationInProject} from "@/utils/app/projects";
 import {useTranslation} from "next-i18next";
 
 interface Props {
@@ -17,7 +17,7 @@ export const ConversationComponent = ({conversation, projectId}: Props) => {
   const {t: tCommon} = useTranslation('common');
 
   const {
-    state: {selectedConversation, messageIsStreaming, projects},
+    state: {selectedConversation, messageIsStreaming},
     handleSelectConversation,
     handleDeleteConversation,
     dispatch: homeDispatch,

@@ -46,7 +46,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
 
 
   const {
-    state: {prompts, projects, selectedProjectId},
+    state: {snippets, projects, selectedProjectId},
 
   } = useContext(HomeContext);
 
@@ -150,7 +150,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
             </div>
 
             <div>
-              {prompts.map((snippet) => (
+              {snippets.map((snippet) => (
                 <div key={snippet.id} className="flex items-center space-x-2">
                   <input
                     type="checkbox"

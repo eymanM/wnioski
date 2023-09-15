@@ -132,8 +132,8 @@ export const PromptModal: FC<Props> = ({prompt, onClose, onUpdateSnippet, onDele
               {tCommon('Delete')}
             </button>
           </div>
-          </div>
         </div>
+      </div>
     </div>
   );
 };

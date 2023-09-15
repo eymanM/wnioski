@@ -17,8 +17,7 @@ const useErrorService = () => {
             code: error.status || 'unknown',
             messageLines: error.statusText
               ? [error.statusText]
-              : [
-              ],
+              : [],
           } as ErrorMessage);
       },
       [t],

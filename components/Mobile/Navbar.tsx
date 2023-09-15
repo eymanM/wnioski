@@ -22,7 +22,6 @@ export const Navbar: FC<Props> = ({
 
       <IconPlus
         className="cursor-pointer hover:text-neutral-400 mr-8"
-        //onClick={onNewConversation}
       />
     </nav>
   );

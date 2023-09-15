@@ -7,7 +7,6 @@ import {getEndpoint} from '@/utils/app/api';
 import {throttle} from '@/utils/data/throttle';
 
 import {ChatBody, Conversation, Message} from '@/types/chat';
-import {Plugin} from '@/types/plugin';
 
 import HomeContext from '@/pages/api/home/home.context';
 
@@ -32,7 +31,6 @@ export const Chat = memo(({stopConversationRef}: Props) => {
       projects,
       models,
       apiKey,
-      pluginKeys,
       serverSideApiKeyIsSet,
       modelError,
       loading,
@@ -81,7 +79,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
           key: apiKey,
           prompt: updatedConversation.prompt,
         };
-        const endpoint = getEndpoint(plugin);
+        const endpoint = getEndpoint();
         let body;
 
         body = JSON.stringify(chatBody);
@@ -210,7 +208,6 @@ export const Chat = memo(({stopConversationRef}: Props) => {
     [
       apiKey,
       conversations,
-      pluginKeys,
       selectedConversation,
       selectedProjectId,
       stopConversationRef,
@@ -260,10 +257,10 @@ export const Chat = memo(({stopConversationRef}: Props) => {
     if (selectedConversation) {
       throttledScrollDown();
 
-    selectedConversation &&
-    setCurrentMessage(
-      selectedConversation.messages?.[selectedConversation.messages.length - 2],
-    );
+      selectedConversation &&
+      setCurrentMessage(
+        selectedConversation.messages?.[selectedConversation.messages.length - 2],
+      );
     }
   }, [selectedConversation, throttledScrollDown]);
 
@@ -296,7 +293,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
       {(!(apiKey || serverSideApiKeyIsSet) || !selectedConversation?.id) ? (
         <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[600px]">
           <div className="text-center text-4xl font-bold text-black dark:text-white">
-            Welcome to Chatbot UI
+            Chatbot UI
           </div>
           <div className="text-center text-gray-500 dark:text-gray-400">
             <div className="mb-2">
@@ -371,9 +368,9 @@ export const Chat = memo(({stopConversationRef}: Props) => {
           <ChatInput
             stopConversationRef={stopConversationRef}
             textareaRef={textareaRef}
-            onSend={(message, plugin) => {
+            onSend={(message) => {
               setCurrentMessage(message);
-              handleSend(message, 0, plugin);
+              handleSend(message, 0);
             }}
             onScrollDownClick={handleScrollDown}
             onRegenerate={() => {

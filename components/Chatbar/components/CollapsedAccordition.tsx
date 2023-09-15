@@ -63,18 +63,18 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
                 >
                   <IconSettings2 size={16}/>
                 </button>
-              <button
-                onClick={async (e) => {
-                  homeDispatch({field: 'selectedProjectId', value: project.id});
-                  setAccordionOpen(project.id);
-                  e.stopPropagation();
-                  await handleCreateConversation(project.id);
-                }}
-                className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                title={tSidebar('Add new conversation')!}
-              >
-                <IconPlus size={16}/>
-              </button>
+                <button
+                  onClick={async (e) => {
+                    homeDispatch({field: 'selectedProjectId', value: project.id});
+                    setAccordionOpen(project.id);
+                    e.stopPropagation();
+                    await handleCreateConversation(project.id);
+                  }}
+                  className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
+                  title={tSidebar('Add new conversation')!}
+                >
+                  <IconPlus size={16}/>
+                </button>
               </div>
 
             </div>

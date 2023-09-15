@@ -1,5 +1,5 @@
 import {IconTextCaption,} from '@tabler/icons-react';
-import {DragEvent, useContext, useEffect, useState,} from 'react';
+import {useContext, useState,} from 'react';
 
 import {Snippet} from '@/types/snippet';
 
@@ -18,8 +18,6 @@ export const PromptComponent = ({prompt}: Props) => {
   } = useContext(PromptbarContext);
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isRenaming, setIsRenaming] = useState(false);
 
   const handleUpdateSnippet = (snippet: Snippet) => {
     handleUpdatePrompt(snippet);
@@ -28,21 +26,6 @@ export const PromptComponent = ({prompt}: Props) => {
   const handleDeleteSnippet = async (snippetId: string) => {
     handleDeletePrompt(snippetId);
   };
-
-
-  const handleDragStart = (e: DragEvent<HTMLButtonElement>, prompt: Snippet) => {
-    if (e.dataTransfer) {
-      e.dataTransfer.setData('prompt', JSON.stringify(prompt));
-    }
-  };
-
-  useEffect(() => {
-    if (isRenaming) {
-      setIsDeleting(false);
-    } else if (isDeleting) {
-      setIsRenaming(false);
-    }
-  }, [isRenaming, isDeleting]);
 
   return (
     <div className="relative flex items-center">
@@ -53,7 +36,6 @@ export const PromptComponent = ({prompt}: Props) => {
           e.stopPropagation();
           setShowModal(true);
         }}
-        onDragStart={(e) => handleDragStart(e, prompt)}
       >
         <IconTextCaption size={18}/>
 

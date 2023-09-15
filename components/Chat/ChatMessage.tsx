@@ -2,8 +2,6 @@ import {IconAdjustmentsFilled, IconRobot, IconUser,} from '@tabler/icons-react';
 import {FC, memo, useContext, useEffect, useRef, useState} from 'react';
 
 import {useTranslation} from 'next-i18next';
-
-//import { updateConversation } from '@/utils/app/conversation';
 import {Conversation, Message} from '@/types/chat';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -15,7 +13,7 @@ import rehypeMathjax from 'rehype-mathjax';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import {OutcomeModal} from "@/components/Promptbar/components/OutcomeModal";
-import {getProjects, handleUpdateConversationInProject} from "@/utils/app/projs_threads";
+import {getProjects, handleUpdateConversationInProject} from "@/utils/app/projects";
 
 export interface Props {
   message: Message;
@@ -34,10 +32,8 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messageContent, setMessageContent] = useState(message.content);
-
   const [showModal, setShowModal] = useState(false);
   const [outcomeState, setOutcomeState] = useState(selectedConversation?.outcome ?? '');
-
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 
@@ -164,7 +160,6 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
                       if (children[0] == '▍') {
                         return <span className="animate-pulse cursor-default mt-1">▍</span>
                       }
-
                       children[0] = (children[0] as string).replace("`▍`", "▍")
                     }
 
@@ -232,7 +227,7 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
       </div>
       {showModal && (
         <OutcomeModal
-          conversation={JSON.parse(localStorage.getItem('selectedConversation')!)}
+          conversation={selectedConversation!}
           onClose={() => setShowModal(false)}
           onUpdate={handleUpdate}
           outcome={outcomeState}

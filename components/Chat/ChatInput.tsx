@@ -4,13 +4,10 @@ import {KeyboardEvent, MutableRefObject, useCallback, useContext, useEffect, use
 import {useTranslation} from 'next-i18next';
 
 import {Message} from '@/types/chat';
-import {Plugin} from '@/types/plugin';
-
 import HomeContext from '@/pages/api/home/home.context';
-import {VariableModal} from './VariableModal';
 
 interface Props {
-  onSend: (message: Message, plugin: Plugin | null) => void;
+  onSend: (message: Message) => void;
   onRegenerate: () => void;
   onScrollDownClick: () => void;
   stopConversationRef: MutableRefObject<boolean>;
@@ -29,9 +26,7 @@ export const ChatInput = ({
   const {t} = useTranslation('chat');
 
   const {
-    state: {selectedConversation, messageIsStreaming, prompts},
-
-
+    state: {selectedConversation, messageIsStreaming, snippets},
   } = useContext(HomeContext);
 
   const [content, setContent] = useState<string>();
@@ -40,14 +35,10 @@ export const ChatInput = ({
   const [activePromptIndex] = useState(0);
   const [promptInputValue, setPromptInputValue] = useState('');
   const [variables] = useState<string[]>([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const [plugin, setPlugin] = useState<Plugin | null>(null);
-
   const promptListRef = useRef<HTMLUListElement | null>(null);
 
-  const filteredPrompts = prompts.filter((prompt) =>
-    prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
+  snippets.filter((snippet) =>
+    snippet.name.toLowerCase().includes(promptInputValue.toLowerCase()),
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -65,7 +56,7 @@ export const ChatInput = ({
     }
 
     setContent(value);
-    updatePromptListVisibility(value);
+    updateSnippetListVisibility(value);
   };
 
   const handleSend = () => {
@@ -78,9 +69,8 @@ export const ChatInput = ({
       return;
     }
 
-    onSend({role: 'user', content}, plugin);
+    onSend({role: 'user', content});
     setContent('');
-    setPlugin(null);
 
     if (window.innerWidth < 640 && textareaRef && textareaRef.current) {
       textareaRef.current.blur();
@@ -109,7 +99,7 @@ export const ChatInput = ({
     }
   };
 
-  const updatePromptListVisibility = useCallback((text: string) => {
+  const updateSnippetListVisibility = useCallback((text: string) => {
     const match = text.match(/\/\w*$/);
 
     if (match) {
@@ -121,19 +111,6 @@ export const ChatInput = ({
     }
   }, []);
 
-
-  const handleSubmit = (updatedVariables: string[]) => {
-    const newContent = content?.replace(/{{(.*?)}}/g, (match, variable) => {
-      const index = variables.indexOf(variable);
-      return updatedVariables[index];
-    });
-
-    setContent(newContent);
-
-    if (textareaRef && textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  };
 
   useEffect(() => {
     if (promptListRef.current) {
@@ -242,15 +219,6 @@ export const ChatInput = ({
                 <IconArrowDown size={18}/>
               </button>
             </div>
-          )}
-
-          {isModalVisible && (
-            <VariableModal
-              prompt={filteredPrompts[activePromptIndex]}
-              variables={variables}
-              onSubmit={handleSubmit}
-              onClose={() => setIsModalVisible(false)}
-            />
           )}
         </div>
       </div>

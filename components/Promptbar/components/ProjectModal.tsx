@@ -22,13 +22,6 @@ export const ProjectModal: FC<Props> = ({project, onClose, onUpdate, onDelete}) 
   };
 
   useEffect(() => {
-    // const handleMouseDown = (e: MouseEvent) => {
-    //    //@ts-ignore
-    //   if (projModalRef.current && !projModalRef.current.innerHTML.includes(e.target.innerHTML)) {
-    //     window.addEventListener('mouseup', handleMouseUp);
-    //   }
-    // };
-
     const handleMouseDown = (e: MouseEvent) => {
       if (projModalRef.current && !projModalRef.current.contains(e.target as Node)) {
         window.addEventListener('mouseup', handleMouseUp);
