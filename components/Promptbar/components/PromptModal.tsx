@@ -123,7 +123,7 @@ export const PromptModal: FC<Props> = ({prompt, onClose, onUpdateSnippet, onDele
             </button>
             <button
               type="button"
-              className="w-full px-4 py-2 mt-10 border rounded-lg shadow border-neutral-500 text-neutral-900 hover:bg-neutral-100 focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-white dark:text-black dark:hover:bg-neutral-300"
+              className="w-full px-4 py-2 mt-10 border rounded-lg shadow border-neutral-500 text-neutral-900 hover:bg-neutral-100 focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-red-400 dark:text-black dark:hover:bg-red-500"
               onClick={() => {
                 onDeleteSnippet(prompt.id);
                 onClose();
