@@ -1,9 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {useQuery} from 'react-query';
 
-import {GetServerSideProps} from 'next';
-import {useTranslation} from 'next-i18next';
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 import {useCreateReducer} from '@/hooks/useCreateReducer';
@@ -45,7 +42,6 @@ const Home = ({
   serverSideApiKeyIsSet,
   defaultModelId,
 }: Props) => {
-  const {t} = useTranslation('sidebar');
   const {getModels} = useApiService();
   const {getModelsError} = useErrorService();
 
@@ -65,29 +61,6 @@ const Home = ({
   } = contextValue;
 
   const stopConversationRef = useRef<boolean>(false);
-
-  const {data, error} = useQuery(
-    ['GetModels', apiKey, serverSideApiKeyIsSet],
-    ({signal}) => {
-      if (!apiKey && !serverSideApiKeyIsSet) return null;
-
-      return getModels(
-        {
-          key: apiKey,
-        },
-        signal,
-      );
-    },
-    {enabled: true, refetchOnMount: false},
-  );
-
-  useEffect(() => {
-    if (data) dispatch({field: 'models', value: data});
-  }, [data, dispatch]);
-
-  useEffect(() => {
-    dispatch({field: 'modelError', value: getModelsError(error)});
-  }, [dispatch, error, getModelsError]);
 
   const handleSelectConversation = (conversation: Conversation) => {
     dispatch({
@@ -112,7 +85,7 @@ const Home = ({
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: t('New conversation'),
+      name: 'New conversation',
       messages: [],
       includedOutcomesFromConversationIds: [],
       prompt: DEFAULT_SYSTEM_PROMPT,
@@ -311,27 +284,19 @@ const Home = ({
 };
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async ({locale}) => {
-  const defaultModelId =
-    (process.env.DEFAULT_MODEL &&
-      Object.values(OpenAIModelID).includes(
-        process.env.DEFAULT_MODEL as OpenAIModelID,
-      ) &&
-      process.env.DEFAULT_MODEL) ||
-    fallbackModelID;
-
-  return {
-    props: {
-      serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
-      defaultModelId,
-      ...(await serverSideTranslations(locale ?? 'en', [
-        'common',
-        'chat',
-        'sidebar',
-        'markdown',
-        'promptbar',
-        'settings',
-      ])),
-    },
-  };
-};
+// export const getServerSideProps: GetServerSideProps = async ({locale}) => {
+//   const defaultModelId =
+//     (process.env.DEFAULT_MODEL &&
+//       Object.values(OpenAIModelID).includes(
+//         process.env.DEFAULT_MODEL as OpenAIModelID,
+//       ) &&
+//       process.env.DEFAULT_MODEL) ||
+//     fallbackModelID;
+//
+//   return {
+//     props: {
+//       serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
+//       defaultModelId,
+//     },
+//   };
+// };

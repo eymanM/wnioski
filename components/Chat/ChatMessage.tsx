@@ -1,7 +1,6 @@
 import {IconAdjustmentsFilled, IconRobot, IconUser,} from '@tabler/icons-react';
 import {FC, memo, useContext, useEffect, useRef, useState} from 'react';
 
-import {useTranslation} from 'next-i18next';
 import {Conversation, Message} from '@/types/chat';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -22,7 +21,6 @@ export interface Props {
 }
 
 export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => {
-  const {t} = useTranslation('chat');
 
   const {
     state: {selectedConversation, messageIsStreaming, selectedProjectId},
@@ -129,7 +127,7 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
                       onClick={handleEditMessage}
                       disabled={messageContent.trim().length <= 0}
                     >
-                      {t('Save & Submit')}
+                      {'Save & Submit'}
                     </button>
                     <button
                       className="h-[40px] rounded-md border border-neutral-300 px-4 py-1 text-sm font-medium text-neutral-700 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
@@ -138,7 +136,7 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit}) => 
                         setIsEditing(false);
                       }}
                     >
-                      {t('Cancel')}
+                      {'Cancel'}
                     </button>
                   </div>
                 </div>

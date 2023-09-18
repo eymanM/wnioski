@@ -1,6 +1,5 @@
 import {FC, KeyboardEvent, useEffect, useRef, useState} from 'react';
 
-import {useTranslation} from 'next-i18next';
 
 import {Snippet} from '@/types/snippet';
 
@@ -12,9 +11,6 @@ interface Props {
 }
 
 export const PromptModal: FC<Props> = ({prompt, onClose, onUpdateSnippet, onDeleteSnippet}) => {
-  const {t} = useTranslation('promptbar');
-  const {t: tCommon} = useTranslation('common');
-  const {t: tSidebar} = useTranslation('sidebar');
   const [name, setName] = useState(prompt.name);
   const [description, setDescription] = useState(prompt.description);
   const [content, setContent] = useState(prompt.content);
@@ -70,35 +66,35 @@ export const PromptModal: FC<Props> = ({prompt, onClose, onUpdateSnippet, onDele
             role="dialog"
           >
             <div className="text-sm font-bold text-black dark:text-neutral-200">
-              {t('Name')}
+              {'Name'}
             </div>
             <input
               ref={snippetNameInputRef}
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
-              placeholder={t('A name for your prompt.') || ''}
+              placeholder={'A name for your prompt.' || ''}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {tCommon('Description')}
+              {'Description'}
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{resize: 'none'}}
-              placeholder={tSidebar('Description for this context information')!}
+              placeholder={'Description for this context information'!}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {tSidebar('Context information')!}
+              {'Context information'!}
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{resize: 'none'}}
-              placeholder={tSidebar('Your snippet..')!}
+              placeholder={'Your snippet..'}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={10}
@@ -119,7 +115,7 @@ export const PromptModal: FC<Props> = ({prompt, onClose, onUpdateSnippet, onDele
                 onClose();
               }}
             >
-              {tCommon('Save')}
+              {'Save'}
             </button>
             <button
               type="button"
@@ -129,7 +125,7 @@ export const PromptModal: FC<Props> = ({prompt, onClose, onUpdateSnippet, onDele
                 onClose();
               }}
             >
-              {tCommon('Delete')}
+              {'Delete'}
             </button>
           </div>
         </div>

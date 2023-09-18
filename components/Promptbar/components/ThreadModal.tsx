@@ -2,7 +2,6 @@ import {FC, KeyboardEvent, useContext, useEffect, useRef, useState} from 'react'
 import {Conversation} from "@/types/chat";
 import HomeContext from "@/pages/api/home/home.context";
 import {Snippet} from "@/types/snippet";
-import {useTranslation} from "next-i18next";
 
 interface Props {
   conversation: Conversation;
@@ -13,8 +12,6 @@ interface Props {
 }
 
 export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelete, projectId}) => {
-  const {t: tCommon} = useTranslation('common');
-  const {t: tSidebar} = useTranslation('sidebar');
   const [name, setName] = useState(conversation.name);
   const [outcome, setOutcome] = useState(conversation.outcome);
   //const [snippets, setSnippets] = useState(conversation.snippets);
@@ -102,7 +99,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
             </div>
 
             <div className="text-sm font-bold text-black dark:text-neutral-200">
-              {tCommon('Name')}
+              {'Name'}
             </div>
             <input
               ref={threadNameInputRef}
@@ -113,19 +110,19 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {tCommon('Outcome')}
+              {'Outcome'}
             </div>
             <textarea
               rows={5}
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{resize: 'none'}}
-              placeholder={tSidebar('Result (outcome) of your AI conversation for this thread')!}
+              placeholder={'Result (outcome) of your AI conversation for this thread'!}
               value={outcome}
               onChange={(e) => setOutcome(e.target.value)}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {tSidebar('Outcomes from other threads')}
+              {'Outcomes from other threads'}
             </div>
 
             <div>
@@ -146,7 +143,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
             </div>
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {tSidebar('Context informations')}
+              {'Context informations'}
             </div>
 
             <div>
@@ -182,7 +179,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
                 onClose();
               }}
             >
-              {tCommon('Save')}
+              {'Save'}
             </button>
 
             <button
@@ -193,7 +190,7 @@ export const ThreadModal: FC<Props> = ({conversation, onClose, onUpdate, onDelet
                 onClose();
               }}
             >
-              {tCommon('Delete')}
+              {'Delete'}
             </button>
           </div>
         </div>

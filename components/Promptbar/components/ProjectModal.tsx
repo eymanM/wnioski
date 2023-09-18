@@ -1,5 +1,4 @@
 import {FC, KeyboardEvent, useEffect, useRef, useState} from 'react';
-import {useTranslation} from "next-i18next";
 import {Project} from "@/components/Chatbar/Chatbar";
 
 interface Props {
@@ -10,7 +9,6 @@ interface Props {
 }
 
 export const ProjectModal: FC<Props> = ({project, onClose, onUpdate, onDelete}) => {
-  const {t: tCommon} = useTranslation('common');
   const [projectName, setProjectName] = useState(project.name);
   const projModalRef = useRef<HTMLDivElement>(null);
 
@@ -63,7 +61,7 @@ export const ProjectModal: FC<Props> = ({project, onClose, onUpdate, onDelete}) 
           >
 
             <div id={'project-modal-div-6'} className="text-sm font-bold text-black dark:text-neutral-200">
-              {tCommon('Name')}
+              {'Name'}
             </div>
             <textarea
               id={'project-modal-textarea-1'}
@@ -87,7 +85,7 @@ export const ProjectModal: FC<Props> = ({project, onClose, onUpdate, onDelete}) 
                 onClose();
               }}
             >
-              {tCommon('Save')}
+              {'Save'}
             </button>
 
             <button
@@ -98,7 +96,7 @@ export const ProjectModal: FC<Props> = ({project, onClose, onUpdate, onDelete}) 
                 onClose();
               }}
             >
-              {tCommon('Delete')}
+              {'Delete'}
             </button>
           </div>
         </div>

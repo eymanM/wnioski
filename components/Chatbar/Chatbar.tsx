@@ -1,7 +1,5 @@
 import {useCallback, useContext, useEffect} from 'react';
 
-import {useTranslation} from 'next-i18next';
-
 import {useCreateReducer} from '@/hooks/useCreateReducer';
 
 import {Conversation} from '@/types/chat';
@@ -27,8 +25,6 @@ export interface Project {
 }
 
 export const Chatbar = () => {
-  const {t} = useTranslation('sidebar');
-
   const chatBarContextValue = useCreateReducer<ChatbarInitialState>({
     initialState,
   });
@@ -111,7 +107,7 @@ export const Chatbar = () => {
       <Sidebar<Project>
         side={'left'}
         isOpen={showChatbar}
-        addItemButtonTitle={t('New chat')}
+        addItemButtonTitle={'New chat'}
         visibleButton={false}
         itemComponent={<CollapsedAccordition projects={projects} handleCreateProject={createProject}
                                              handleCreateConversation={handleNewConversation}/>}

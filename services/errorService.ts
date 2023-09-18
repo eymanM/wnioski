@@ -1,11 +1,9 @@
 import {useMemo} from 'react';
 
-import {useTranslation} from 'next-i18next';
 
 import {ErrorMessage} from '@/types/error';
 
 const useErrorService = () => {
-  const {t} = useTranslation('chat');
 
   return {
     getModelsError: useMemo(
@@ -13,14 +11,14 @@ const useErrorService = () => {
         return !error
           ? null
           : ({
-            title: t('Error fetching models.'),
+            title: 'Error fetching models.',
             code: error.status || 'unknown',
             messageLines: error.statusText
               ? [error.statusText]
               : [],
           } as ErrorMessage);
       },
-      [t],
+      [],
     ),
   };
 };

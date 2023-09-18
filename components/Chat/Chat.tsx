@@ -1,8 +1,6 @@
 import {memo, MutableRefObject, useCallback, useContext, useEffect, useRef, useState,} from 'react';
 import toast from 'react-hot-toast';
 
-import {useTranslation} from 'next-i18next';
-
 import {getEndpoint} from '@/utils/app/api';
 import {throttle} from '@/utils/data/throttle';
 
@@ -21,15 +19,11 @@ interface Props {
 }
 
 export const Chat = memo(({stopConversationRef}: Props) => {
-  const {t} = useTranslation('chat');
-  const {t: tCommon} = useTranslation('common');
-
   const {
     state: {
       selectedConversation,
       conversations,
       projects,
-      models,
       apiKey,
       serverSideApiKeyIsSet,
       modelError,
@@ -297,12 +291,12 @@ export const Chat = memo(({stopConversationRef}: Props) => {
           </div>
           <div className="text-center text-gray-500 dark:text-gray-400">
             <div className="mb-2">
-              {t(
-                'Please set your OpenAI API key in the bottom left of the sidebar and then create new project and conversation.',
-              )}
+
+                Please set your OpenAI API key in the bottom left of the sidebar and then create new project and conversation.
+
             </div>
             <div>
-              {t("If you don't have an OpenAI API key, you can get one here: ")}
+              {"If you don't have an OpenAI API key, you can get one here: "}
               <a
                 href="https://platform.openai.com/account/api-keys"
                 target="_blank"
@@ -327,13 +321,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
               <>
                 <div className="mx-auto flex flex-col space-y-5 md:space-y-10 px-3 pt-5 md:pt-12 sm:max-w-[600px]">
                   <div className="text-center text-3xl font-semibold text-gray-800 dark:text-gray-100">
-                    {models.length === 0 ? (
-                      <div>
-                        <Spinner size="16px" className="mx-auto"/>
-                      </div>
-                    ) : (
-                      tCommon('Applications')
-                    )}
+                    Applications
                   </div>
                 </div>
               </>

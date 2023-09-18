@@ -3,7 +3,6 @@ import {IconPlus, IconSettings2} from "@tabler/icons-react";
 import {Project} from "@/components/Chatbar/Chatbar";
 import {useContext, useState} from "react";
 import HomeContext from "@/pages/api/home/home.context";
-import {useTranslation} from "next-i18next";
 import {ProjectModal} from "@/components/Promptbar/components/ProjectModal";
 
 interface Props {
@@ -14,7 +13,6 @@ interface Props {
 
 export const CollapsedAccordition = ({projects, handleCreateProject, handleCreateConversation}: Props) => {
 
-  const {t: tSidebar} = useTranslation('sidebar');
   const [isAccordionOpen, setAccordionOpen] = useState<string>('');
   const [showProjectModal, setProjectShowModal] = useState(false);
 
@@ -32,11 +30,11 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
         <button
           className="text-sidebar flex w-full flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10 relative"
           onClick={async () => {
-            await handleCreateProject(tSidebar('New project'));
+            await handleCreateProject('New project');
           }}
         >
           <IconPlus size={16}/>
-          {tSidebar('Add new project')}
+          {'Add new project'}
         </button>
       </div>
       {
@@ -59,7 +57,7 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
                     setProjectShowModal(true);
                   }}
                   className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                  title={tSidebar('Add new conversation')!}
+                  title={'Add new conversation'!}
                 >
                   <IconSettings2 size={16}/>
                 </button>
@@ -71,7 +69,7 @@ export const CollapsedAccordition = ({projects, handleCreateProject, handleCreat
                     await handleCreateConversation(project.id);
                   }}
                   className='flex items-center justify-center w-6 h-6 rounded-full bg-gray-500/10 hover:bg-gray-500/20 transition-colors duration-200'
-                  title={tSidebar('Add new conversation')!}
+                  title={'Add new conversation'!}
                 >
                   <IconPlus size={16}/>
                 </button>

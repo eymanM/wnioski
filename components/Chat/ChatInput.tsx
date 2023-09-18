@@ -1,7 +1,6 @@
 import {IconArrowDown, IconPlayerStop, IconPrompt, IconRepeat, IconSend,} from '@tabler/icons-react';
 import {KeyboardEvent, MutableRefObject, useCallback, useContext, useEffect, useRef, useState,} from 'react';
 
-import {useTranslation} from 'next-i18next';
 
 import {Message} from '@/types/chat';
 import HomeContext from '@/pages/api/home/home.context';
@@ -23,8 +22,6 @@ export const ChatInput = ({
   textareaRef,
   showScrollDownButton,
 }: Props) => {
-  const {t} = useTranslation('chat');
-
   const {
     state: {selectedConversation, messageIsStreaming, snippets},
   } = useContext(HomeContext);
@@ -47,10 +44,9 @@ export const ChatInput = ({
 
     if (maxLength && value.length > maxLength) {
       alert(
-        t(
+
           `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
-          {maxLength, valueLength: value.length},
-        ),
+
       );
       return;
     }
@@ -65,7 +61,7 @@ export const ChatInput = ({
     }
 
     if (!content) {
-      alert(t('Please enter a message'));
+      alert('Please enter a message');
       return;
     }
 
@@ -155,7 +151,7 @@ export const ChatInput = ({
             className="absolute top-0 left-0 right-0 mx-auto mb-3 flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600 dark:bg-[#343541] dark:text-white md:mb-0 md:mt-2"
             onClick={handleStopConversation}
           >
-            <IconPlayerStop size={16}/> {t('Stop Generating')}
+            <IconPlayerStop size={16}/> {'Stop Generating'}
           </button>
         )}
 
@@ -166,7 +162,7 @@ export const ChatInput = ({
               className="absolute top-0 left-0 right-0 mx-auto mb-3 flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600 dark:bg-[#343541] dark:text-white md:mb-0 md:mt-2"
               onClick={onRegenerate}
             >
-              <IconRepeat size={16}/> {t('Regenerate response')}
+              <IconRepeat size={16}/> {'Regenerate response'}
             </button>
           )}
 

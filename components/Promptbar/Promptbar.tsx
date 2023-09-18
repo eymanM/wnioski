@@ -1,5 +1,4 @@
 import {useContext, useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
 
 import {useCreateReducer} from '@/hooks/useCreateReducer';
 
@@ -16,10 +15,6 @@ import {initialState, PromptbarInitialState} from './Promptbar.state';
 import {v4 as uuidv4} from 'uuid';
 
 const Promptbar = () => {
-
-
-  const {t: tSidebar} = useTranslation('sidebar');
-
   const promptBarContextValue = useCreateReducer<PromptbarInitialState>({
     initialState,
   });
@@ -43,7 +38,7 @@ const Promptbar = () => {
     if (defaultModelId) {
       const newSnippet: Snippet = {
         id: uuidv4(),
-        name: `${tSidebar('Context information')} ${snippets.length + 1}`,
+        name: `${'Context information'} ${snippets.length + 1}`,
         description: '',
         content: '',
       };
@@ -121,7 +116,7 @@ const Promptbar = () => {
       <Sidebar<Snippet>
         side={'right'}
         isOpen={showPromptbar}
-        addItemButtonTitle={tSidebar('Add snippet')}
+        addItemButtonTitle={'Add snippet'}
         itemComponent={
           <Prompts
             prompts={filteredPrompts}
